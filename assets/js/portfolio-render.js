@@ -13,11 +13,15 @@ class PortfolioRenderer {
    * Initialize the portfolio rendering
    */
   init() {
-    // Wait for DOM to be ready
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", () => this.render());
-    } else {
-      this.render();
+    try {
+      // Wait for DOM to be ready
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", () => this.render());
+      } else {
+        this.render();
+      }
+    } catch (error) {
+      console.error("Failed to initialize portfolio renderer:", error);
     }
   }
 
@@ -25,9 +29,13 @@ class PortfolioRenderer {
    * Main render function
    */
   render() {
-    this.renderHeader();
-    this.renderContent("en", "intro_en");
-    this.renderContent("zh", "intro_zhtw");
+    try {
+      this.renderHeader();
+      this.renderContent("en", "intro_en");
+      this.renderContent("zh", "intro_zhtw");
+    } catch (error) {
+      console.error("Failed to render portfolio content:", error);
+    }
   }
 
   /**
