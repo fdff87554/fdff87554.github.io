@@ -1,0 +1,123 @@
+/* Portfolio Custom Styles */
+
+/* Base Styles */
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Lead Text */
+.lead {
+  font-size: 1.5rem;
+  line-height: 1.8;
+  color: #ffffff;
+  margin: 2rem 0;
+  font-weight: 300;
+  border-left: 4px solid #64b5f6;
+  padding-left: 1rem;
+}
+
+/* Section Styling */
+.section {
+  margin: 4rem 0;
+  padding: 2rem;
+  border-radius: 8px;
+}
+
+/* Headings */
+h2.major {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: #ffffff;
+}
+
+h3 {
+  font-size: 1.8rem;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #64b5f6;
+  padding-bottom: 0.5rem;
+}
+
+h4 {
+  font-size: 1.2rem;
+  color: #e3f2fd;
+  margin-bottom: 0.5rem;
+}
+
+/* Grid Layouts */
+.skills-grid,
+.projects-grid,
+.presentations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+/* Company, Date, and Institution Styling */
+.institution,
+.company,
+.event,
+.role {
+  color: #90caf9;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.date {
+  color: #b3e5fc;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+/* Item Styling */
+.education-item,
+.job,
+.project-item,
+.presentation-item {
+  margin-bottom: 2rem;
+}
+
+/* Skip Navigation Link */
+.skip-nav {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #000;
+  color: #fff;
+  padding: 8px 16px;
+  text-decoration: none;
+  z-index: 10000;
+  border-radius: 0 0 4px 0;
+}
+
+.skip-nav:focus {
+  top: 0;
+}
+
+/* Profile Image Styling */
+.logo img {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .skills-grid,
+  .projects-grid,
+  .presentations-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lead {
+    font-size: 1.2rem;
+  }
+
+  .section {
+    padding: 1rem;
+  }
+}
