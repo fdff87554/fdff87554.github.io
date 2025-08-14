@@ -1,512 +1,180 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <!--
 	Dimension by HTML5 UP
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
-<html>
+<html lang="zh-TW">
+  <head>
+    <title>&lt;Crazyfire/&gt;</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript>
+      <link rel="stylesheet" href="assets/css/noscript.css" />
+    </noscript>
 
-<head>
-	<title>&lt;Crazyfire/&gt;</title>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="assets/css/main.css" />
-	<noscript>
-		<link rel="stylesheet" href="assets/css/noscript.css" />
-	</noscript>
+    <style>
+      /* Base Styles */
+      main {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+        font-family: system-ui, -apple-system, sans-serif;
+      }
 
-	<style>
-		/* Base Styles */
-		main {
-			max-width: 1200px;
-			margin: 0 auto;
-			padding: 2rem;
-			font-family: system-ui, -apple-system, sans-serif;
-		}
+      /* Lead Text */
+      .lead {
+        font-size: 1.5rem;
+        line-height: 1.8;
+        color: #ffffff;
+        margin: 2rem 0;
+        font-weight: 300;
+        border-left: 4px solid #64b5f6;
+        padding-left: 1rem;
+      }
 
-		/* Lead Text */
-		.lead {
-			font-size: 1.5rem;
-			line-height: 1.8;
-			color: #ffffff;
-			margin: 2rem 0;
-			font-weight: 300;
-			border-left: 4px solid #64b5f6;
-			padding-left: 1rem;
-		}
+      /* Section Styling */
+      .section {
+        margin: 4rem 0;
+        padding: 2rem;
+        border-radius: 8px;
+      }
 
-		/* Section Styling */
-		.section {
-			margin: 4rem 0;
-			padding: 2rem;
-			border-radius: 8px;
-		}
+      /* Headings */
+      h2.major {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        color: #ffffff;
+      }
 
-		/* Headings */
-		h2.major {
-			font-size: 2.5rem;
-			margin-bottom: 2rem;
-			color: #ffffff;
-		}
+      h3 {
+        font-size: 1.8rem;
+        color: #ffffff;
+        margin-bottom: 1.5rem;
+        border-bottom: 2px solid #64b5f6;
+        padding-bottom: 0.5rem;
+      }
 
-		h3 {
-			font-size: 1.8rem;
-			color: #ffffff;
-			margin-bottom: 1.5rem;
-			border-bottom: 2px solid #64b5f6;
-			padding-bottom: 0.5rem;
-		}
+      h4 {
+        font-size: 1.2rem;
+        color: #e3f2fd;
+        margin-bottom: 0.5rem;
+      }
 
-		h4 {
-			font-size: 1.2rem;
-			color: #e3f2fd;
-			margin-bottom: 0.5rem;
-		}
+      /* Grid Layouts */
+      .skills-grid,
+      .projects-grid,
+      .presentations-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+      }
 
-		/* Grid Layouts */
-		.skills-grid {
-			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-			gap: 2rem;
-		}
+      /* Company, Date, and Institution Styling */
+      .institution,
+      .company,
+      .event,
+      .role {
+        color: #90caf9;
+        font-weight: 500;
+        margin-bottom: 0.25rem;
+      }
 
-		/* Company & Date Styling */
-		.institution,
-		.company {
-			color: #90caf9;
-			font-weight: 500;
-			margin-bottom: 0.25rem;
-		}
+      .date {
+        color: #b3e5fc;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
 
-		.date {
-			color: #b3e5fc;
-			font-size: 0.9rem;
-			margin-bottom: 1rem;
-		}
+      /* Item Styling */
+      .education-item,
+      .job,
+      .project-item,
+      .presentation-item {
+        margin-bottom: 2rem;
+      }
 
-		/* Education Item Styling */
-		.education-item {
-			margin-bottom: 2rem;
-		}
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .skills-grid,
+        .projects-grid,
+        .presentations-grid {
+          grid-template-columns: 1fr;
+        }
 
-		/* Responsive Design */
-		@media (max-width: 768px) {
-			.skills-grid {
-				grid-template-columns: 1fr;
-			}
+        .lead {
+          font-size: 1.2rem;
+        }
 
-			.lead {
-				font-size: 1.2rem;
-			}
+        .section {
+          padding: 1rem;
+        }
+      }
+    </style>
+  </head>
 
-			.section {
-				padding: 1rem;
-			}
-		}
-	</style>
-</head>
+  <body class="is-preload">
+    <!-- Wrapper -->
+    <div id="wrapper">
+      <!-- Header -->
+      <header id="header">
+        <div class="logo">
+          <img style="border-radius: 50%" src="" alt="" />
+        </div>
+        <div class="content">
+          <div class="inner">
+            <h1></h1>
+            <p>
+              Taipei, Taiwan 🇹🇼 <br />
+              Student University <br />
+              Machine Learning / Web Development / Information Security
+            </p>
+          </div>
+        </div>
+        <nav>
+          <ul>
+            <!-- Navigation will be dynamically generated -->
+          </ul>
+        </nav>
+      </header>
 
-<body class="is-preload">
+      <main id="main">
+        <!-- English Version -->
+        <article id="intro_en">
+          <!-- Content will be dynamically generated -->
+        </article>
 
-	<!-- Wrapper -->
-	<div id="wrapper">
+        <!-- Chinese Version -->
+        <article id="intro_zhtw">
+          <!-- Content will be dynamically generated -->
+        </article>
+      </main>
 
-		<!-- Header -->
-		<header id="header">
-			<div class="logo">
-				<img style="border-radius: 50%;"
-					src="https://s.gravatar.com/avatar/6f0afd73f9e68da18c23f56385a9759e?s=130" alt="Crazyfire's Image">
-			</div>
-			<div class="content">
-				<div class="inner">
-					<h1>Crazyfire Lee</h1>
-					<p>
-						Taipei, Taiwan 🇹🇼 <br>
-						Student University <br>
-						Machine Learning / Web Develop / Information Security
-					</p>
-				</div>
-			</div>
-			<nav>
-				<ul>
-					<li>
-						<a href="#intro_en">Intro</a>
-					</li>
-					<li>
-						<a href="#intro_zhtw">簡介</a>
-					</li>
-					<li>
-						<a href="https://blog.crazyfirelee.tw">Blog</a>
-					</li>
-					<li>
-						<a href="https://github.com/fdff87554">Github</a>
-					</li>
-					<li>
-						<a href="https://www.linkedin.com/in/darren-lee-69790b187/">linkedin</a>
-					</li>
-					<li>
-						<a href="mailto:me@crazyfirelee.tw">Email</a>
-					</li>
-					<!-- <li>
-						<a href="https://blog.crazyfirelee.tw" class="icon solid fa-home"><span
-								class="label">Blog</span></a>
-					</li>
-					<li>
-						<a href="https://github.com/fdff87554" class="icon brands fa-github"><span
-								class="label">Github</span></a>
-					</li>
-					<li>
-						<a href="https://www.linkedin.com/in/darren-lee-69790b187/"
-							class="icon brands fa-linkedin"><span class="label">linkedin</span></a>
-					</li>
-					<li>
-						<a href="mailto:fdff87554@gmail.com" class="icon solid fa-envelope"><span
-								class="label">Email</span></a>
-					</li> -->
-				</ul>
-			</nav>
-		</header>
+      <!-- Footer -->
+      <footer id="footer">
+        <p class="copyright">
+          &copy; 2024 Crazyfire Lee. Design:
+          <a href="https://html5up.net">HTML5 UP</a>.
+        </p>
+      </footer>
+    </div>
 
-		<main id="main">
-			<!-- Intro -->
-			<article id="intro_en">
-				<h2 class="major">About Me</h2>
+    <!-- BG -->
+    <div id="bg"></div>
 
-				<!-- Experience Section -->
-				<section class="section experience">
-					<h3>Experience</h3>
-					<div class="job">
-						<h4>Threat Signature Research Team Intern</h4>
-						<div class="company">TXOne Networks Inc.</div>
-						<div class="date">Apr. 2023 - Sept. 2024</div>
-					</div>
-					<div class="job">
-						<h4>AI Development Assistant Engineer (Intern)</h4>
-						<div class="company">Wiwynn - AI & Data Development Department</div>
-						<div class="date">Mar. 2022 - Jul. 2022</div>
-					</div>
-					<div class="job">
-						<h4>Deep Learning Teaching Assistant</h4>
-						<div class="company">Fu Jen Catholic University - Department of Computer Science</div>
-						<div class="date">Jun. 2021 - Feb. 2022</div>
-					</div>
-					<div class="job">
-						<h4>Smart Manufacturing Transformation Intern</h4>
-						<div class="company">AUO Corporation - A+ Summer Internship Program</div>
-						<div class="date">Jul. 2020 - Aug. 2020</div>
-					</div>
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
 
-					<!-- Activities & Leadership -->
-					<h3>Activities</h3>
-					<div class="job">
-						<h4>AIS3 Junior (Advanced Information Security Summer School)</h4>
-						<div class="company">Speaker / Teaching Assistant</div>
-						<div class="date">2022 - 2024</div>
-					</div>
-					<div class="job">
-						<h4>OPass Android</h4>
-						<div class="company">Co-maintainer</div>
-						<div class="date">2022 - Present</div>
-					</div>
-					<div class="job">
-						<h4>NISRA (Networks and Information Security Research Association)</h4>
-						<div class="company">Vice President</div>
-						<div class="date">2019 - 2020</div>
-				</section>
-
-				<!-- Education Section -->
-				<section class="section education">
-					<h3>Education</h3>
-					<div class="education-item">
-						<h4>Master's Degree in Institute of Information Security</h4>
-						<div class="institution">National Tsing Hua University</div>
-						<div class="date">Sept. 2022 - Jun. 2024</div>
-					</div>
-					<div class="education-item">
-						<h4>Bachelor's Degree in Computer Science and Information Engineering</h4>
-						<div class="institution">Fu Jen Catholic University</div>
-						<div class="date">Sept. 2018 - Jun. 2022</div>
-					</div>
-				</section>
-
-				<!-- Technical Skills Section -->
-				<section class="section skills">
-					<h3>Technical Skills</h3>
-					<div class="skills-grid">
-						<div class="skill-category">
-							<h4>Deep Learning</h4>
-							<ul>
-								<li>TensorFlow</li>
-								<li>PyTorch</li>
-							</ul>
-						</div>
-						<div class="skill-category">
-							<h4>Development & Project Management</h4>
-							<ul>
-								<li>NextJS</li>
-								<li>ReactJS</li>
-								<li>Docker</li>
-								<li>Kubernetes</li>
-							</ul>
-						</div>
-					</div>
-				</section>
-
-				<!-- Project Section -->
-				<section class="section projects">
-					<h3>Projects & Paper</h3>
-					<div class="projects-grid">
-						<div class="project-item">
-							<h4>Evolutionary KMeans for Industrial Control Anomaly Detection</h4>
-							<div class="institution">ARIS 2023 Research Paper</div>
-						</div>
-
-						<div class="project-item">
-							<h4>Classifier and Clusterer Combine Method Research</h4>
-							<div class="institution">Wiwynn Corporation Internal Project</div>
-						</div>
-
-						<div class="project-item">
-							<h4>Unsupervised Learning in Industrial Control Security</h4>
-							<div class="institution">AIS3 Critical Infrastructure Group Project, 2021</div>
-						</div>
-
-						<div class="project-item">
-							<h4>Time Series Prediction for ICS Anomaly Detection</h4>
-							<div class="institution">Bionic Computing Course Project, 2021</div>
-						</div>
-
-						<div class="project-item">
-							<h4>Deep Learning for Hidden Watermarking</h4>
-							<div class="institution">Fu Jen Catholic University Graduation Project</div>
-						</div>
-
-						<div class="project-item">
-							<h4>Security Vulnerability Lab Environment</h4>
-							<div class="institution">NISRA Training Platform</div>
-						</div>
-					</div>
-				</section>
-
-				<!-- Speaking Section -->
-				<section class="section presentations">
-					<h3>Speaking</h3>
-					<div class="presentations-grid">
-						<div class="presentation-item">
-							<h4>AIS3 Junior Program</h4>
-							<div class="event">Introduction to Information Security and AI</div>
-							<div class="role">Speaker</div>
-							<div class="date">2024</div>
-						</div>
-
-						<div class="presentation-item">
-							<h4>Fushing Senior High School</h4>
-							<div class="event">Network Security and Cybersecurity Workshop</div>
-							<div class="role">Guest Speaker</div>
-							<div class="date">2024</div>
-						</div>
-
-						<div class="presentation-item">
-							<h4>Yungping High School</h4>
-							<div class="event">Introduction to Cybersecurity World</div>
-							<div class="role">Guest Speaker</div>
-							<div class="date">2024</div>
-						</div>
-
-						<div class="presentation-item">
-							<h4>NISRA Workshop</h4>
-							<div class="event">VPN Security Challenge</div>
-							<div class="role">Speaker</div>
-							<div class="date">2024</div>
-						</div>
-
-						<!-- Previous Years - Major Programs -->
-						<div class="presentation-item">
-							<h4>AIS3 Club</h4>
-							<div class="event">Web Security Workshop</div>
-							<div class="role">Speaker</div>
-							<div class="date">2023</div>
-						</div>
-
-						<div class="presentation-item">
-							<h4>AIS3 Junior Program</h4>
-							<div class="role">Teaching Assistant</div>
-							<div class="date">2022 - 2023</div>
-						</div>
-					</div>
-				</section>
-			</article>
-
-			<article id="intro_zhtw">
-				<h2 class="major">關於我</h2>
-
-				<section class="section experience">
-					<h3>工作經歷</h3>
-					<div class="job">
-						<h4>威脅情資研究實習生</h4>
-						<div class="company">睿控網安 (TXOne Networks)</div>
-						<div class="date">2023年4月 - 2024年9月</div>
-					</div>
-					<div class="job">
-						<h4>AI開發助理工程師（實習）</h4>
-						<div class="company">緯穎科技服務 - AI與數據智慧開發部</div>
-						<div class="date">2022年3月 - 2022年7月</div>
-					</div>
-					<div class="job">
-						<h4>深度學習課程助教</h4>
-						<div class="company">輔仁大學資訊工程學系</div>
-						<div class="date">2021年6月 - 2022年2月</div>
-					</div>
-					<div class="job">
-						<h4>智慧製造轉型實習生</h4>
-						<div class="company">友達光電 - A+ 暑期實習計畫</div>
-						<div class="date">2020年7月 - 2020年8月</div>
-					</div>
-
-					<h3>社群活動</h3>
-					<div class="job">
-						<h4>教育部資安人才培育計畫（AIS3 Junior）</h4>
-						<div class="company">講師 / 助教</div>
-						<div class="date">2022 - 2024</div>
-					</div>
-					<div class="job">
-						<h4>OPass Android 開源專案</h4>
-						<div class="company">共同維護者</div>
-						<div class="date">2022 - 至今</div>
-					</div>
-					<div class="job">
-						<h4>輔大資訊安全研究會（NISRA）</h4>
-						<div class="company">副會長</div>
-						<div class="date">2019 - 2020</div>
-					</div>
-				</section>
-
-				<section class="section education">
-					<h3>學歷</h3>
-					<div class="education-item">
-						<h4>資訊安全研究所 碩士</h4>
-						<div class="institution">國立清華大學</div>
-						<div class="date">2022年9月 - 2024年6月</div>
-					</div>
-					<div class="education-item">
-						<h4>資訊工程學系 學士</h4>
-						<div class="institution">天主教輔仁大學</div>
-						<div class="date">2018年9月 - 2022年6月</div>
-					</div>
-				</section>
-
-				<section class="section skills">
-					<h3>技術能力</h3>
-					<div class="skills-grid">
-						<div class="skill-category">
-							<h4>深度學習</h4>
-							<ul>
-								<li>TensorFlow</li>
-								<li>PyTorch</li>
-							</ul>
-						</div>
-						<div class="skill-category">
-							<h4>開發與專案管理</h4>
-							<ul>
-								<li>NextJS</li>
-								<li>ReactJS</li>
-								<li>Docker</li>
-								<li>Kubernetes</li>
-							</ul>
-						</div>
-					</div>
-				</section>
-
-				<section class="section projects">
-					<h3>專案研究與論文</h3>
-					<div class="projects-grid">
-						<div class="project-item">
-							<h4>Evolutionary KMeans for Industrial Control Anomaly Detection</h4>
-							<div class="institution">ARIS 2023 研究論文</div>
-						</div>
-						<div class="project-item">
-							<h4>分類與分群模型結合方法研究</h4>
-							<div class="institution">緯穎科技服務內部專案</div>
-						</div>
-						<div class="project-item">
-							<h4>工業控制安全之非監督式學習應用</h4>
-							<div class="institution">AIS3 關鍵基礎設施組專題, 2021</div>
-						</div>
-						<div class="project-item">
-							<h4>工控系統時序預測異常檢測研究</h4>
-							<div class="institution">仿生計算課程專題, 2021</div>
-						</div>
-						<div class="project-item">
-							<h4>深度學習於隱藏式浮水印之應用</h4>
-							<div class="institution">輔仁大學畢業專題</div>
-						</div>
-						<div class="project-item">
-							<h4>資安漏洞靶機環境建置</h4>
-							<div class="institution">NISRA 教學平台</div>
-						</div>
-					</div>
-				</section>
-
-				<section class="section presentations">
-					<h3>演講與授課經驗</h3>
-					<div class="presentations-grid">
-						<div class="presentation-item">
-							<h4>教育部資安人才培育計畫</h4>
-							<div class="event">資訊安全與人工智慧概論</div>
-							<div class="role">講師</div>
-							<div class="date">2024</div>
-						</div>
-						<div class="presentation-item">
-							<h4>復興實驗高級中學</h4>
-							<div class="event">資安與網路安全工作坊</div>
-							<div class="role">講師</div>
-							<div class="date">2024</div>
-						</div>
-						<div class="presentation-item">
-							<h4>永平高級中學</h4>
-							<div class="event">資訊安全世界導論</div>
-							<div class="role">講師</div>
-							<div class="date">2024</div>
-						</div>
-						<div class="presentation-item">
-							<h4>輔大資訊安全研究會</h4>
-							<div class="event">VPN 資安挑戰賽</div>
-							<div class="role">講師</div>
-							<div class="date">2024</div>
-						</div>
-						<div class="presentation-item">
-							<h4>AIS3 社群講座</h4>
-							<div class="event">網頁安全實務工作坊</div>
-							<div class="role">講師</div>
-							<div class="date">2023</div>
-						</div>
-						<div class="presentation-item">
-							<h4>教育部資安人才培育計畫</h4>
-							<div class="role">助教</div>
-							<div class="date">2022 - 2023</div>
-						</div>
-					</div>
-				</section>
-			</article>
-		</main>
-
-		<!-- Footer -->
-		<footer id="footer">
-			<p class="copyright">&copy; 2024 Crazyfire Lee. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-		</footer>
-
-	</div>
-
-	<!-- BG -->
-	<div id="bg"></div>
-
-	<!-- Scripts -->
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/js/browser.min.js"></script>
-	<script src="assets/js/breakpoints.min.js"></script>
-	<script src="assets/js/util.js"></script>
-	<script src="assets/js/main.js"></script>
-
-</body>
-
+    <!-- Portfolio Data and Renderer -->
+    <script src="assets/js/portfolio-data.js"></script>
+    <script src="assets/js/portfolio-render.js"></script>
+  </body>
 </html>
