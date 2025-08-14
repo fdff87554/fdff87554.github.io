@@ -41,7 +41,7 @@ class PortfolioRenderer {
     const logoImg = header.querySelector(".logo img");
     if (logoImg) {
       logoImg.src = this.data.profile.avatar;
-      logoImg.alt = `${this.data.profile.name}'s Image`;
+      logoImg.alt = `${this.data.profile.name} 的個人照片`;
     }
 
     const nameElement = header.querySelector("h1");
@@ -110,6 +110,10 @@ class PortfolioRenderer {
   renderExperienceSection(parent, lang) {
     const section = document.createElement("section");
     section.className = "section experience";
+    section.setAttribute(
+      "aria-label",
+      this.data.sectionTitles.experience[lang]
+    );
 
     // Jobs subsection
     const jobsTitle = document.createElement("h3");
@@ -172,6 +176,7 @@ class PortfolioRenderer {
   renderEducationSection(parent, lang) {
     const section = document.createElement("section");
     section.className = "section education";
+    section.setAttribute("aria-label", this.data.sectionTitles.education[lang]);
 
     const title = document.createElement("h3");
     title.textContent = this.data.sectionTitles.education[lang];
@@ -207,6 +212,7 @@ class PortfolioRenderer {
   renderSkillsSection(parent, lang) {
     const section = document.createElement("section");
     section.className = "section skills";
+    section.setAttribute("aria-label", this.data.sectionTitles.skills[lang]);
 
     const title = document.createElement("h3");
     title.textContent = this.data.sectionTitles.skills[lang];
@@ -244,6 +250,7 @@ class PortfolioRenderer {
   renderProjectsSection(parent, lang) {
     const section = document.createElement("section");
     section.className = "section projects";
+    section.setAttribute("aria-label", this.data.sectionTitles.projects[lang]);
 
     const title = document.createElement("h3");
     title.textContent = this.data.sectionTitles.projects[lang];
@@ -278,6 +285,7 @@ class PortfolioRenderer {
   renderSpeakingSection(parent, lang) {
     const section = document.createElement("section");
     section.className = "section presentations";
+    section.setAttribute("aria-label", this.data.sectionTitles.speaking[lang]);
 
     const title = document.createElement("h3");
     title.textContent = this.data.sectionTitles.speaking[lang];

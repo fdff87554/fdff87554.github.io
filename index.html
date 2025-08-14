@@ -98,6 +98,23 @@
         margin-bottom: 2rem;
       }
 
+      /* Skip Navigation Link */
+      .skip-nav {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        background: #000;
+        color: #fff;
+        padding: 8px 16px;
+        text-decoration: none;
+        z-index: 10000;
+        border-radius: 0 0 4px 0;
+      }
+
+      .skip-nav:focus {
+        top: 0;
+      }
+
       /* Responsive Design */
       @media (max-width: 768px) {
         .skills-grid,
@@ -118,10 +135,13 @@
   </head>
 
   <body class="is-preload">
+    <!-- Skip Navigation -->
+    <a href="#main" class="skip-nav">跳至主要內容</a>
+
     <!-- Wrapper -->
     <div id="wrapper">
       <!-- Header -->
-      <header id="header">
+      <header id="header" role="banner" aria-label="網站標題">
         <div class="logo">
           <img style="border-radius: 50%" src="" alt="" />
         </div>
@@ -135,36 +155,51 @@
             </p>
           </div>
         </div>
-        <nav>
+        <nav role="navigation" aria-label="主要導航">
           <ul>
             <!-- Navigation will be dynamically generated -->
           </ul>
         </nav>
       </header>
 
-      <main id="main">
+      <main id="main" role="main" aria-label="主要內容">
         <!-- English Version -->
-        <article id="intro_en">
+        <article
+          id="intro_en"
+          aria-live="polite"
+          aria-label="English Version"
+          lang="en"
+        >
           <!-- Content will be dynamically generated -->
         </article>
 
         <!-- Chinese Version -->
-        <article id="intro_zhtw">
+        <article
+          id="intro_zhtw"
+          aria-live="polite"
+          aria-label="中文版本"
+          lang="zh-TW"
+        >
           <!-- Content will be dynamically generated -->
         </article>
       </main>
 
       <!-- Footer -->
-      <footer id="footer">
+      <footer id="footer" role="contentinfo" aria-label="頁尾資訊">
         <p class="copyright">
           &copy; 2024 Crazyfire Lee. Design:
-          <a href="https://html5up.net">HTML5 UP</a>.
+          <a
+            href="https://html5up.net"
+            rel="noopener noreferrer"
+            target="_blank"
+            >HTML5 UP</a
+          >.
         </p>
       </footer>
     </div>
 
     <!-- BG -->
-    <div id="bg"></div>
+    <div id="bg" role="presentation" aria-hidden="true"></div>
 
     <!-- Scripts -->
     <script src="assets/js/jquery.min.js"></script>
