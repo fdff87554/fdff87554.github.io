@@ -14,8 +14,8 @@ const portfolioData = {
       zh: "台北, 台灣 🇹🇼",
     },
     title: {
-      en: "Student University",
-      zh: "學生",
+      en: "Software Engineer",
+      zh: "軟體工程師",
     },
     expertise: {
       en: "Machine Learning / Web Development / Information Security",
@@ -43,6 +43,20 @@ const portfolioData = {
   // Experience Section
   experience: {
     jobs: [
+      {
+        title: {
+          en: "Threat Research Team Software Engineer",
+          zh: "威脅研究團隊軟體工程師",
+        },
+        company: {
+          en: "TXOne Networks Inc.",
+          zh: "睿控網安 (TXOne Networks)",
+        },
+        period: {
+          en: "Apr. 2025 - Present",
+          zh: "2025年4月 - 現在",
+        },
+      },
       {
         title: {
           en: "Threat Signature Research Team Intern",
@@ -200,6 +214,16 @@ const portfolioData = {
   projects: [
     {
       title: {
+        en: "Enhancing AI Model Training Efficiency through Distributed GPU Management",
+        zh: "透過分散式 GPU 管理提升 AI 模型訓練效率",
+      },
+      organization: {
+        en: "Master's thesis from National Tsing Hua University 2024",
+        zh: "國立清華大學 2024 碩士論文",
+      },
+    },
+    {
+      title: {
         en: "Evolutionary KMeans for Industrial Control Anomaly Detection",
         zh: "Evolutionary KMeans for Industrial Control Anomaly Detection",
       },
@@ -264,6 +288,66 @@ const portfolioData = {
   speaking: [
     {
       title: {
+        en: "Financial Industry Cybersecurity Workshop",
+        zh: "金融業資安研習",
+      },
+      event: {
+        en: "AI Cybersecurity for Everyone: New Generation Cybersecurity Challenges",
+        zh: "AI 資安你我他，新世代的資安問題",
+      },
+      role: {
+        en: "Speaker",
+        zh: "講師",
+      },
+      date: "2025",
+    },
+    {
+      title: {
+        en: "AIS3 2025 Alumni Sharing Session",
+        zh: "AIS3 2025 校友分享會",
+      },
+      event: {
+        en: "The Path of Cybersecurity: Are You Ready?",
+        zh: "資安這條路，你準備好了嗎？",
+      },
+      role: {
+        en: "Speaker",
+        zh: "講師",
+      },
+      date: "2025",
+    },
+    {
+      title: {
+        en: "CHJHS Cybersecurity Workshop",
+        zh: "CHJHS 資安工作坊",
+      },
+      event: {
+        en: "Unveiling the Mysteries of Hackers",
+        zh: "揭開駭客的神秘面紗",
+      },
+      role: {
+        en: "Speaker",
+        zh: "講師",
+      },
+      date: "2025",
+    },
+    {
+      title: {
+        en: "Financial Industry Cybersecurity Workshop",
+        zh: "金融業資安研習",
+      },
+      event: {
+        en: "Introduction to AI and AI Security",
+        zh: "AI 導論與 AI 資訊安全",
+      },
+      role: {
+        en: "Speaker",
+        zh: "講師",
+      },
+      date: "2024",
+    },
+    {
+      title: {
         en: "AIS3 Junior Program",
         zh: "教育部資安人才培育計畫",
       },
@@ -287,7 +371,7 @@ const portfolioData = {
         zh: "資安與網路安全工作坊",
       },
       role: {
-        en: "Guest Speaker",
+        en: "Speaker",
         zh: "講師",
       },
       date: "2024",
