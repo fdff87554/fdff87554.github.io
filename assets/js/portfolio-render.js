@@ -46,7 +46,8 @@ class PortfolioRenderer {
     if (!header) return;
 
     // Determine language based on document lang attribute
-    const lang = document.documentElement.lang === "en" ? "en" : "zh";
+    // Default to English, only use Chinese if explicitly set to zh-*
+    const lang = document.documentElement.lang.startsWith("zh") ? "zh" : "en";
 
     // Update profile information
     const logoImg = header.querySelector(".logo img");
