@@ -5,6 +5,13 @@
 
 "use strict";
 
+// Animation timing constants
+const ANIMATION = {
+  PRELOAD_DELAY: 100,
+  SHOW_DELAY: 50,
+  HIDE_DURATION: 325,
+};
+
 // Main application
 const PortfolioApp = {
   // State
@@ -13,25 +20,39 @@ const PortfolioApp = {
 
   // Initialize
   init() {
-    // Cache elements
-    this.body = document.body;
-    this.wrapper = document.getElementById("wrapper");
-    this.header = document.getElementById("header");
-    this.footer = document.getElementById("footer");
-    this.main = document.getElementById("main");
-    this.articles = document.querySelectorAll("#main article");
+    try {
+      // Cache elements
+      this.body = document.body;
+      this.wrapper = document.getElementById("wrapper");
+      this.header = document.getElementById("header");
+      this.footer = document.getElementById("footer");
+      this.main = document.getElementById("main");
+      this.articles = document.querySelectorAll("#main article");
 
-    // Setup
-    this.setupPageLoad();
-    this.setupNavigation();
-    this.setupArticleHandlers();
-    this.handleInitialHash();
+      // Hide main and articles initially
+      if (this.main) this.main.style.display = "none";
+      this.articles.forEach((article) => {
+        article.style.display = "none";
+        article.setAttribute("aria-hidden", "true");
+      });
+
+      // Setup
+      this.setupPageLoad();
+      this.setupNavigation();
+      this.setupArticleHandlers();
+      this.handleInitialHash();
+    } catch (error) {
+      console.error("PortfolioApp initialization failed:", error);
+    }
   },
 
   // Remove preload class after page loads
   setupPageLoad() {
     window.addEventListener("load", () => {
-      setTimeout(() => this.body.classList.remove("is-preload"), 100);
+      setTimeout(
+        () => this.body.classList.remove("is-preload"),
+        ANIMATION.PRELOAD_DELAY
+      );
     });
   },
 
@@ -126,13 +147,30 @@ const PortfolioApp = {
     // Show target article
     article.style.display = "";
 
+    // Set ARIA states for hidden articles
+    this.articles.forEach((a) => {
+      if (a !== article) {
+        a.setAttribute("aria-hidden", "true");
+      }
+    });
+
     // Activate after brief delay for animation
     setTimeout(() => {
       article.classList.add("active");
       this.currentArticle = article;
       window.scrollTo(0, 0);
       this.isAnimating = false;
-    }, 50);
+
+      // Focus management for accessibility
+      const heading = article.querySelector("h2, h3");
+      if (heading) {
+        heading.setAttribute("tabindex", "-1");
+        heading.focus();
+      }
+
+      // Set ARIA state for active article
+      article.setAttribute("aria-hidden", "false");
+    }, ANIMATION.SHOW_DELAY);
   },
 
   // Hide article
@@ -140,6 +178,11 @@ const PortfolioApp = {
     if (this.isAnimating || !this.currentArticle) return;
 
     this.isAnimating = true;
+
+    // Remember trigger element for focus return
+    const triggerLink = document.querySelector(
+      `a[href="#${this.currentArticle?.id}"]`
+    );
 
     // Deactivate article
     this.currentArticle.classList.remove("active");
@@ -157,7 +200,17 @@ const PortfolioApp = {
 
       this.body.classList.remove("is-article-visible");
       this.isAnimating = false;
-    }, 325);
+
+      // Return focus to navigation for accessibility
+      if (triggerLink) {
+        triggerLink.focus();
+      }
+
+      // Reset ARIA states
+      this.articles.forEach((a) => {
+        a.setAttribute("aria-hidden", "true");
+      });
+    }, ANIMATION.HIDE_DURATION);
   },
 };
 
@@ -167,13 +220,3 @@ if (document.readyState === "loading") {
 } else {
   PortfolioApp.init();
 }
-
-// Hide articles initially
-document.addEventListener("DOMContentLoaded", () => {
-  const main = document.getElementById("main");
-  if (main) main.style.display = "none";
-
-  document.querySelectorAll("#main article").forEach((article) => {
-    article.style.display = "none";
-  });
-});
