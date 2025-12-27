@@ -12,6 +12,9 @@
       name="viewport"
       content="width=device-width, initial-scale=1, user-scalable=no"
     />
+    <!-- Font preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="assets/css/main.css" />
     <link rel="stylesheet" href="assets/css/portfolio-minimal.css" />
     <noscript>
@@ -22,6 +25,27 @@
   <body class="is-preload">
     <!-- Skip Navigation -->
     <a href="#main" class="skip-nav">跳至主要內容</a>
+
+    <!-- Fallback content for users without JavaScript -->
+    <noscript>
+      <div class="noscript-fallback">
+        <h1>Crazyfire Lee</h1>
+        <p>Software Engineer | Taipei, Taiwan</p>
+        <p>
+          Email:
+          <a href="mailto:me@crazyfirelee.tw">me@crazyfirelee.tw</a>
+        </p>
+        <p>
+          GitHub:
+          <a
+            href="https://github.com/fdff87554"
+            target="_blank"
+            rel="noopener noreferrer"
+            >github.com/fdff87554</a
+          >
+        </p>
+      </div>
+    </noscript>
 
     <!-- Wrapper -->
     <div id="wrapper">
@@ -35,7 +59,7 @@
         </div>
         <div class="content">
           <div class="inner">
-            <h1></h1>
+            <h1>Crazyfire Lee</h1>
             <p>
               Taipei, Taiwan 🇹🇼 <br />
               Machine Learning / Web Development / Information Security
@@ -88,9 +112,9 @@
     <!-- BG -->
     <div id="bg" role="presentation" aria-hidden="true"></div>
 
-    <!-- Scripts -->
-    <script src="assets/js/portfolio-data.js"></script>
-    <script src="assets/js/portfolio-render.js"></script>
-    <script src="assets/js/main-simplified.js"></script>
+    <!-- Scripts (defer for non-blocking load) -->
+    <script src="assets/js/portfolio-data.js" defer></script>
+    <script src="assets/js/portfolio-render.js" defer></script>
+    <script src="assets/js/main-simplified.js" defer></script>
   </body>
 </html>

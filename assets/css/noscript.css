@@ -29,6 +29,13 @@
 			opacity: 1;
 		}
 
+/* Noscript Fallback */
+
+	.noscript-fallback {
+		text-align: center;
+		padding: 2rem;
+	}
+
 /* Main */
 
 	#main article {

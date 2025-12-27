@@ -45,6 +45,10 @@ class PortfolioRenderer {
     const header = document.getElementById("header");
     if (!header) return;
 
+    // Determine language based on document lang attribute
+    // Default to English, only use Chinese if explicitly set to zh-*
+    const lang = document.documentElement.lang.startsWith("zh") ? "zh" : "en";
+
     // Update profile information
     const logoImg = header.querySelector(".logo img");
     if (logoImg) {
@@ -55,6 +59,13 @@ class PortfolioRenderer {
     const nameElement = header.querySelector("h1");
     if (nameElement) {
       nameElement.textContent = this.data.profile.name;
+    }
+
+    // Update location and expertise from data source (DRY principle)
+    const descElement = header.querySelector(".content .inner p");
+    if (descElement) {
+      descElement.innerHTML = `${this.data.profile.location[lang]} <br />
+        ${this.data.profile.expertise[lang]}`;
     }
 
     // Render navigation
@@ -113,6 +124,36 @@ class PortfolioRenderer {
   }
 
   /**
+   * Generic list item renderer (DRY principle)
+   * @param {HTMLElement} parent - Parent element to append items to
+   * @param {Array} items - Array of items to render
+   * @param {string} lang - Language code
+   * @param {Object} config - Configuration for field mapping
+   */
+  renderListItems(parent, items, lang, config) {
+    items.forEach((item) => {
+      const div = document.createElement("div");
+      div.className = config.className;
+
+      const title = document.createElement("h4");
+      title.textContent = item[config.titleKey][lang];
+      div.appendChild(title);
+
+      const subtitle = document.createElement("div");
+      subtitle.className = config.subtitleClassName;
+      subtitle.textContent = item[config.subtitleKey][lang];
+      div.appendChild(subtitle);
+
+      const date = document.createElement("div");
+      date.className = "date";
+      date.textContent = item.period[lang];
+      div.appendChild(date);
+
+      parent.appendChild(div);
+    });
+  }
+
+  /**
    * Render experience section (jobs and activities)
    */
   renderExperienceSection(parent, lang) {
@@ -128,25 +169,11 @@ class PortfolioRenderer {
     jobsTitle.textContent = this.data.sectionTitles.experience[lang];
     section.appendChild(jobsTitle);
 
-    this.data.experience.jobs.forEach((job) => {
-      const jobDiv = document.createElement("div");
-      jobDiv.className = "job";
-
-      const title = document.createElement("h4");
-      title.textContent = job.title[lang];
-      jobDiv.appendChild(title);
-
-      const company = document.createElement("div");
-      company.className = "company";
-      company.textContent = job.company[lang];
-      jobDiv.appendChild(company);
-
-      const date = document.createElement("div");
-      date.className = "date";
-      date.textContent = job.period[lang];
-      jobDiv.appendChild(date);
-
-      section.appendChild(jobDiv);
+    this.renderListItems(section, this.data.experience.jobs, lang, {
+      className: "job",
+      titleKey: "title",
+      subtitleClassName: "company",
+      subtitleKey: "company",
     });
 
     // Activities subsection
@@ -154,25 +181,11 @@ class PortfolioRenderer {
     activitiesTitle.textContent = this.data.sectionTitles.activities[lang];
     section.appendChild(activitiesTitle);
 
-    this.data.experience.activities.forEach((activity) => {
-      const activityDiv = document.createElement("div");
-      activityDiv.className = "job";
-
-      const title = document.createElement("h4");
-      title.textContent = activity.title[lang];
-      activityDiv.appendChild(title);
-
-      const role = document.createElement("div");
-      role.className = "company";
-      role.textContent = activity.role[lang];
-      activityDiv.appendChild(role);
-
-      const date = document.createElement("div");
-      date.className = "date";
-      date.textContent = activity.period[lang];
-      activityDiv.appendChild(date);
-
-      section.appendChild(activityDiv);
+    this.renderListItems(section, this.data.experience.activities, lang, {
+      className: "job",
+      titleKey: "title",
+      subtitleClassName: "company",
+      subtitleKey: "role",
     });
 
     parent.appendChild(section);
