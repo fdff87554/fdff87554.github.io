@@ -4,57 +4,31 @@
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
-<html lang="zh-TW">
+<html lang="en">
   <head>
-    <title>&lt;Crazyfire/&gt;</title>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>&lt;Crazyfire/&gt;</title>
     <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, user-scalable=no"
+      name="description"
+      content="Crazyfire Lee is a software engineer in Taipei, Taiwan, working on machine learning, web development and information security."
     />
-    <!-- Font preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="assets/css/main.css" />
-    <link rel="stylesheet" href="assets/css/portfolio-minimal.css" />
+    <link rel="stylesheet" href="assets/css/site.css" />
     <noscript>
       <link rel="stylesheet" href="assets/css/noscript.css" />
     </noscript>
   </head>
 
   <body class="is-preload">
-    <!-- Skip Navigation -->
-    <a href="#main" class="skip-nav">跳至主要內容</a>
-
-    <!-- Fallback content for users without JavaScript -->
-    <noscript>
-      <div class="noscript-fallback">
-        <h1>Crazyfire Lee</h1>
-        <p>Software Engineer | Taipei, Taiwan</p>
-        <p>
-          Email:
-          <a href="mailto:me@crazyfirelee.tw">me@crazyfirelee.tw</a>
-        </p>
-        <p>
-          GitHub:
-          <a
-            href="https://github.com/fdff87554"
-            target="_blank"
-            rel="noopener noreferrer"
-            >github.com/fdff87554</a
-          >
-        </p>
-      </div>
-    </noscript>
-
-    <!-- Wrapper -->
     <div id="wrapper">
-      <!-- Header -->
-      <header id="header" role="banner" aria-label="網站標題">
+      <header id="header">
         <div class="logo">
           <img
             src="https://s.gravatar.com/avatar/6f0afd73f9e68da18c23f56385a9759e?s=130"
-            alt="Crazyfire Lee 的個人照片"
+            alt="Crazyfire Lee"
           />
         </div>
         <div class="content">
@@ -66,10 +40,10 @@
             </p>
           </div>
         </div>
-        <nav role="navigation" aria-label="主要導航">
+        <nav>
           <ul>
             <li><a href="#intro_en">Intro</a></li>
-            <li><a href="#intro_zhtw">簡介</a></li>
+            <li><a href="#intro_zhtw" lang="zh-TW">簡介</a></li>
             <li>
               <a
                 href="https://blog.crazyfirelee.tw"
@@ -99,15 +73,10 @@
         </nav>
       </header>
 
-      <main id="main" role="main" aria-label="主要內容">
-        <!-- English Version -->
-        <article
-          id="intro_en"
-          aria-live="polite"
-          aria-label="English Version"
-          lang="en"
-        >
-          <h2 class="major">About Me</h2>
+      <main id="main">
+        <article id="intro_en">
+          <a href="#" class="close">Close</a>
+          <h2 class="major" tabindex="-1">About Me</h2>
           <section class="section experience" aria-label="Experience">
             <h3>Experience</h3>
             <div class="job">
@@ -320,14 +289,9 @@
           </section>
         </article>
 
-        <!-- Chinese Version -->
-        <article
-          id="intro_zhtw"
-          aria-live="polite"
-          aria-label="中文版本"
-          lang="zh-TW"
-        >
-          <h2 class="major">關於我</h2>
+        <article id="intro_zhtw" lang="zh-TW">
+          <a href="#" class="close">關閉</a>
+          <h2 class="major" tabindex="-1">關於我</h2>
           <section class="section experience" aria-label="工作經歷">
             <h3>工作經歷</h3>
             <div class="job">
@@ -508,10 +472,9 @@
         </article>
       </main>
 
-      <!-- Footer -->
-      <footer id="footer" role="contentinfo" aria-label="頁尾資訊">
+      <footer id="footer">
         <p class="copyright">
-          &copy; 2025 Crazyfire Lee. Design:
+          &copy; 2026 Crazyfire Lee. Design:
           <a
             href="https://html5up.net"
             rel="noopener noreferrer"
@@ -522,10 +485,8 @@
       </footer>
     </div>
 
-    <!-- BG -->
-    <div id="bg" role="presentation" aria-hidden="true"></div>
+    <div id="bg"></div>
 
-    <!-- Scripts (defer for non-blocking load) -->
-    <script src="assets/js/main-simplified.js" defer></script>
+    <script src="assets/js/main.js" defer></script>
   </body>
 </html>

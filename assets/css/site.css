@@ -1,4 +1,4 @@
-/* Portfolio Minimal CSS - Core Styles Only */
+/* Site styles layered on top of the Dimension template (main.css) */
 
 /* ========================================
    Essential Variables
@@ -27,6 +27,21 @@
 /* ========================================
    Article Container
    ======================================== */
+
+/* Without JS, noscript.css shows #main with every article. */
+#main {
+  display: none;
+}
+
+body.is-article-visible #main {
+  display: flex;
+}
+
+body.is-article-visible #header,
+body.is-article-visible #footer,
+#main article[hidden] {
+  display: none;
+}
 
 #main article {
   /* Size and position */
@@ -170,37 +185,21 @@ h4 {
   color: var(--color-text-muted);
 }
 
-/* Links */
-#main article a {
-  color: var(--color-accent);
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.2s;
+/* Stays reachable while the article scrolls; the icon comes from main.css. */
+#main article .close {
+  position: sticky;
+  top: 0;
+  float: right;
+  border-bottom: 0;
 }
 
-#main article a:hover {
-  border-bottom-color: var(--color-accent);
+#main article .close:not(:hover):before {
+  background-color: var(--color-bg-article);
 }
 
 /* ========================================
    UI Elements
    ======================================== */
-
-/* Skip navigation */
-.skip-nav {
-  position: absolute;
-  top: -40px;
-  left: 0;
-  background: #000;
-  color: #fff;
-  padding: 8px 16px;
-  text-decoration: none;
-  z-index: 10000;
-}
-
-.skip-nav:focus {
-  top: 10px;
-}
 
 /* Profile image */
 .logo img {
@@ -281,7 +280,6 @@ h4 {
     color: black !important;
   }
 
-  .skip-nav,
   #bg {
     display: none !important;
   }

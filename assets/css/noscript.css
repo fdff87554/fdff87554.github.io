@@ -29,16 +29,17 @@
 			opacity: 1;
 		}
 
-/* Noscript Fallback */
-
-	.noscript-fallback {
-		text-align: center;
-		padding: 2rem;
-	}
-
 /* Main */
+
+	#main {
+		display: flex;
+	}
 
 	#main article {
 		opacity: 1;
 		margin: 4rem 0 0 0;
 	}
+
+		#main article .close {
+			display: none;
+		}
