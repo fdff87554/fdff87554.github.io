@@ -161,7 +161,7 @@ class PortfolioRenderer {
     section.className = "section experience";
     section.setAttribute(
       "aria-label",
-      this.data.sectionTitles.experience[lang]
+      this.data.sectionTitles.experience[lang],
     );
 
     // Jobs subsection

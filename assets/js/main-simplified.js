@@ -51,7 +51,7 @@ const PortfolioApp = {
     window.addEventListener("load", () => {
       setTimeout(
         () => this.body.classList.remove("is-preload"),
-        ANIMATION.PRELOAD_DELAY
+        ANIMATION.PRELOAD_DELAY,
       );
     });
   },
@@ -181,7 +181,7 @@ const PortfolioApp = {
 
     // Remember trigger element for focus return
     const triggerLink = document.querySelector(
-      `a[href="#${this.currentArticle?.id}"]`
+      `a[href="#${this.currentArticle?.id}"]`,
     );
 
     // Deactivate article
