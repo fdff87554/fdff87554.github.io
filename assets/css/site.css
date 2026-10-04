@@ -1,10 +1,14 @@
-/* Site styles layered on top of the Dimension template (main.css) */
+/*
+ * crazyfirelee.tw — 改版方向 3b
+ * 白線格線 + 左右分欄 + 樹葉穿過分欄線 + 右側霧面面板。
+ * 基準畫面 1280x800；以下的 px 都以這個尺寸為準，響應式規則見檔案最後。
+ */
 
 /* ========================================
-   Essential Variables
+   Fonts
    ======================================== */
 
-/* Subsets of index.html's characters, built by scripts/subset-fonts.sh. */
+/* index.html 用到的字元子集，由 scripts/subset-fonts.sh 產生 */
 @font-face {
   font-family: "Maple Mono NF CN";
   src: url("../fonts/maple-mono-nf-cn-regular.woff2") format("woff2");
@@ -19,254 +23,868 @@
   font-display: swap;
 }
 
+/* ========================================
+   Design tokens
+   ======================================== */
+
 :root {
-  /* Typography */
   --font-primary:
     "Maple Mono NF CN", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
-  /* Colors */
-  --color-text: rgba(255, 255, 255, 0.9);
-  --color-text-muted: rgba(255, 255, 255, 0.6);
-  --color-border: rgba(255, 255, 255, 0.15);
-  --color-bg-article: rgba(27, 31, 34, 0.95);
+  --bg-base: #1b1f22;
+  --bg-panel: #15191b;
+  /* 各層暗化共用的基色，避免每個 rgba() 各寫一次 */
+  --shade: 17, 20, 22;
 
-  /* Spacing */
-  --space-sm: 1rem;
-  --space-md: 1.5rem;
-  --space-lg: 2rem;
-  --space-xl: 3rem;
+  --ink: #ffffff;
+  --ink-2: rgba(255, 255, 255, 0.92);
+  --ink-3: rgba(255, 255, 255, 0.75);
+  --ink-4: rgba(255, 255, 255, 0.7);
+  --ink-5: rgba(255, 255, 255, 0.5);
+
+  --rule-strong: rgba(255, 255, 255, 0.5);
+  --rule: rgba(255, 255, 255, 0.2);
+  --rule-soft: rgba(255, 255, 255, 0.14);
+
+  /* 只用在「狀態」：目前的職位、Now 的更新點。不拿來當裝飾 */
+  --status: oklch(0.78 0.11 150);
+
+  /* 分欄線的位置。背景漸層的硬切點、左欄右邊框、霧面左緣三者都綁這一個值，
+     響應式時才會一起移動，不會各自算出不同的位置 */
+  --split: 600px;
+  --name-size: 88px;
+  --header-h: 64px;
+  --footer-h: 72px;
 }
 
-/* Only Regular and SemiBold are bundled, so body text uses 400 instead of main.css's 300. */
+/* ========================================
+   Base
+   ======================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
 body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg-base);
+  color: var(--ink);
   font-family: var(--font-primary);
   font-weight: 400;
+  font-size: 16px;
+  line-height: 1.8;
+  -webkit-text-size-adjust: 100%;
 }
 
-/* ========================================
-   Article Container
-   ======================================== */
-
-/* Without JS, noscript.css shows #main with every article. */
-#main {
-  display: none;
+h1,
+h2,
+h3,
+p,
+ol,
+ul {
+  margin: 0;
+  padding: 0;
 }
 
-body.is-article-visible #main {
-  display: flex;
-}
-
-body.is-article-visible #header,
-body.is-article-visible #footer,
-#main article[hidden] {
-  display: none;
-}
-
-#main article {
-  /* Size and position */
-  max-width: 45rem;
-  width: 90%;
-  padding: 2.5rem;
-
-  /* Background */
-  background-color: var(--color-bg-article);
-  border-radius: 4px;
-
-  /* Typography */
-  font-size: 1rem;
-  line-height: 1.65;
-  color: var(--color-text);
-
-  /* Scrolling */
-  overflow-y: auto;
-  max-height: 90vh;
-}
-
-/* Simple scrollbar */
-#main article::-webkit-scrollbar {
-  width: 4px;
-}
-
-#main article::-webkit-scrollbar-thumb {
-  background: var(--color-border);
-  border-radius: 2px;
-}
-
-/* ========================================
-   Typography
-   ======================================== */
-
-h2.major {
-  font-size: 2rem;
-  font-weight: 600;
-  margin: 0 0 var(--space-lg) 0;
-  color: var(--color-text);
-}
-
-h3 {
-  font-size: 1.35rem;
-  font-weight: 600;
-  margin: var(--space-xl) 0 var(--space-md) 0;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--color-border);
-  color: var(--color-text);
-}
-
-h4 {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin: var(--space-lg) 0 var(--space-sm) 0;
-  color: var(--color-text);
-}
-
-/* ========================================
-   Content Elements
-   ======================================== */
-
-/* Sections */
-.section {
-  margin: var(--space-xl) 0;
-}
-
-/* Job/Education items */
-.job,
-.education-item,
-.project-item,
-.presentation-item {
-  margin-bottom: var(--space-lg);
-  padding-bottom: var(--space-lg);
-  border-bottom: 1px solid var(--color-border);
-}
-
-.job:last-child,
-.education-item:last-child,
-.project-item:last-child,
-.presentation-item:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-/* Metadata */
-.company,
-.institution,
-.role,
-.event {
-  margin-bottom: 0.25rem;
-}
-
-.date {
-  font-size: 0.9rem;
-  color: var(--color-text-muted);
-  margin-bottom: var(--space-sm);
-}
-
-/* Skills grid */
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: var(--space-lg);
-  margin: var(--space-lg) 0;
-}
-
-.skill-category h4 {
-  font-size: 1rem;
-}
-
-.skill-category ul {
+ol,
+ul {
   list-style: none;
-  margin: 0 0 var(--space-md);
-  padding: 0 0 0 var(--space-lg);
 }
 
-.skill-category li {
-  padding: 0.25rem 0;
-  margin-bottom: 0.5rem;
-  font-size: 0.95rem;
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
-/* Stays reachable while the article scrolls; the icon comes from main.css. */
-#main article .close {
-  position: sticky;
-  top: 0;
-  float: right;
-  border-bottom: 0;
+img {
+  display: block;
 }
 
-#main article .close:not(:hover):before {
-  background-color: var(--color-bg-article);
+:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: 2px;
 }
 
 /* ========================================
-   UI Elements
+   Language
+
+   每個雙語字串是兩個相鄰的 .lang 元素，各自帶自己的 lang 屬性。
+   有 JS 時只顯示目前語系；沒有 JS 時兩個語系並陳（中間補一個分隔點），
+   所有內容仍然讀得到——這就是取代 noscript.css 的退路。
+
+   切換的鉤子是 .lang 這個 class，不是單純的 [lang]：英文段落裡引用的
+   中文書名同樣會帶 lang="zh-TW"，那種字不該被切換機制藏起來。
+
+   必須用 display: none。visibility / opacity / aria-hidden 都還是會被
+   counter-increment 算進去，目錄編號就會錯。
    ======================================== */
 
-/* Profile image */
-.logo img {
+html.js[data-lang="en"] .lang[lang="zh-TW"],
+html.js[data-lang="zh-TW"] .lang[lang="en"] {
+  display: none;
+}
+
+/* 沒有 JS 時兩個語系各占一行，比並排在同一行好讀 */
+html:not(.js) .lang {
+  display: block;
+}
+
+/* 頁尾的提示是短標籤，排成一行就好 */
+html:not(.js) .colophon__note .lang {
+  display: inline;
+}
+
+html:not(.js) .colophon__note .lang[lang="zh-TW"]::before {
+  content: " · ";
+  color: var(--ink-5);
+}
+
+/* 舊連結用的錨點，沒有內容也不占位 */
+.anchor {
+  display: block;
+  height: 0;
+}
+
+/* ========================================
+   Backdrop（四層，由下而上）
+   ======================================== */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.backdrop > * {
+  position: absolute;
+}
+
+/* 1. 照片。用 vw 而不是 px，葉子在各種寬度下都落在左欄並延伸過分欄線 */
+.backdrop__photo {
+  inset: 0;
+  background-image: url("../../images/bg.jpg");
+  background-size: 117.2vw auto;
+  background-position: -23.44vw 42%;
+  background-repeat: no-repeat;
+  filter: brightness(1.15) saturate(1.2);
+}
+
+/* 2. 水平漸層。硬切點對齊分欄線 */
+.backdrop__sweep {
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(var(--shade), 0.05) 0,
+    rgba(var(--shade), 0.25) var(--split),
+    rgba(var(--shade), 0.5) var(--split),
+    rgba(var(--shade), 0.6) 100%
+  );
+}
+
+/* 3. 左下文字襯底 */
+.backdrop__foot {
+  left: 0;
+  bottom: 0;
+  width: var(--split);
+  height: 60%;
+  background: linear-gradient(
+    180deg,
+    rgba(var(--shade), 0) 0,
+    rgba(var(--shade), 0.78) 100%
+  );
+}
+
+/* 4. 右欄霧面 */
+.backdrop__frost {
+  left: var(--split);
+  right: 0;
+  top: var(--header-h);
+  bottom: var(--footer-h);
+  background: rgba(21, 25, 27, 0.55);
+  backdrop-filter: blur(18px) saturate(1.1);
+  -webkit-backdrop-filter: blur(18px) saturate(1.1);
+}
+
+/* 不支援 backdrop-filter 時改用不透明底色，右欄的可讀性不能靠模糊 */
+@supports not (backdrop-filter: blur(1px)) {
+  .backdrop__frost {
+    background: rgba(21, 25, 27, 0.9);
+  }
+}
+
+/* ========================================
+   Home grid
+   ======================================== */
+
+.home {
+  position: relative;
+  z-index: 1;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: var(--header-h) minmax(0, 1fr) var(--footer-h);
+  grid-template-columns: var(--split) minmax(0, 1fr);
+}
+
+/* ---------- Masthead ---------- */
+
+.masthead {
+  grid-column: 1 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  border-bottom: 1px solid var(--rule-strong);
+  background: rgba(var(--shade), 0.35);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+}
+
+.langswitch {
+  display: flex;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 3px;
+}
+
+.langswitch__option {
+  padding: 4px 10px;
+}
+
+.langswitch__option[aria-current="true"] {
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--bg-base);
+}
+
+/* ---------- Left column ---------- */
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 20px;
+  padding: 0 56px 52px 40px;
+  border-right: 1px solid var(--rule-strong);
+}
+
+.intro__greeting {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* 定稿要求：頭像不加外框或描邊 */
+.intro__avatar {
+  width: 76px;
+  height: 76px;
   border-radius: 50%;
-  width: 100px;
-  height: 100px;
   object-fit: cover;
+  object-position: 50% 30%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.intro__hello {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.intro__name {
+  font-size: var(--name-size);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+}
+
+.intro__tagline {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 470px;
+  padding-top: 18px;
+  border-top: 1px solid var(--rule-strong);
+}
+
+.intro__role {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--ink-2);
+}
+
+.intro__where {
+  font-size: 12px;
+  /* Label 字級在設計稿是 normal，不套用 body 的 1.8 */
+  line-height: normal;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* ---------- Index ---------- */
+
+.index {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 72px;
+}
+
+/* 編號由可見的列計算，不寫死：Now 沒有資料時整列不存在，後面幾列自動遞補 */
+.index__list {
+  counter-reset: idx;
+}
+
+.index__item {
+  counter-increment: idx;
+}
+
+.index__link {
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 20px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rule);
+  transition: background-color 0.2s ease-out;
+}
+
+.index__num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 3px;
+  font-size: 12px;
+  color: var(--ink-5);
+  transition:
+    border-color 0.2s ease-out,
+    background-color 0.2s ease-out,
+    color 0.2s ease-out;
+}
+
+.index__num::before {
+  content: counter(idx, decimal-leading-zero);
+}
+
+.index__title {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.index__desc {
+  font-size: 12px;
+  line-height: normal;
+  color: var(--ink-4);
+}
+
+/* 箭頭放在右欄 padding 裡，所以 default 狀態的三欄版面和設計稿一致，不會被擠動 */
+.index__arrow {
+  position: absolute;
+  right: -24px;
+  font-size: 16px;
+  opacity: 0;
+  transition:
+    opacity 0.2s ease-out,
+    transform 0.2s ease-out;
+}
+
+/* 左側 4px 白條同樣不占版面，只在 open 狀態出現 */
+.index__link::before {
+  content: "";
+  position: absolute;
+  left: -20px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: transparent;
+  transition: background-color 0.2s ease-out;
+}
+
+@media (hover: hover) {
+  .index__link:hover {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.07), transparent);
+  }
+
+  .index__link:hover .index__num {
+    color: var(--ink);
+  }
+
+  .index__link:hover .index__arrow {
+    opacity: 1;
+    transform: translateX(4px);
+  }
+}
+
+.index__link:focus-visible .index__num,
+.index__link:focus-visible .index__arrow {
+  color: var(--ink);
+  opacity: 1;
+}
+
+/* 這一段正在抽屜裡打開 */
+.index__link[aria-current="true"] {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.index__link[aria-current="true"]::before {
+  background: var(--ink);
+}
+
+.index__link[aria-current="true"] .index__num {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--bg-panel);
+}
+
+/* ---------- Footer ---------- */
+
+.colophon {
+  grid-column: 1 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 0 40px;
+  border-top: 1px solid var(--rule-strong);
+  background: rgba(var(--shade), 0.7);
+}
+
+.colophon__links {
+  display: flex;
+  border: 1px solid var(--ink);
+  border-radius: 4px;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.colophon__link {
+  padding: 0 16px;
+  height: 38px;
+  line-height: 38px;
+  transition: background-color 0.2s ease-out;
+}
+
+.colophon__link + .colophon__link {
+  border-left: 1px solid var(--ink);
+}
+
+@media (hover: hover) {
+  .colophon__link:hover {
+    background: rgba(255, 255, 255, 0.075);
+  }
+}
+
+.colophon__note {
+  font-size: 11px;
+  line-height: normal;
+  letter-spacing: 0.15em;
+  color: var(--ink-4);
+}
+
+/* ========================================
+   Sections
+
+   PR 1 的呈現：所有段落依序排在首頁下方，這同時就是停用 JS 時的版面。
+   收進抽屜的規則在下一個 PR 加上。
+   ======================================== */
+
+.sections {
+  position: relative;
+  z-index: 1;
+  background: var(--bg-panel);
+}
+
+.panel {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 56px 48px;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.panel__title {
+  font-size: 52px;
+  font-weight: 600;
+  line-height: 1.1;
+  margin-bottom: 28px;
+}
+
+.panel__group {
+  margin: 36px 0 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule-soft);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.panel__fallback {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-4);
+}
+
+.panel__fallback a {
+  border-bottom: 1px solid var(--rule);
+}
+
+/* ---------- Entries ---------- */
+
+.entry,
+.timeline__item {
+  padding-bottom: 24px;
+}
+
+.entry__date {
+  font-size: 12px;
+  line-height: 1.6;
+  letter-spacing: 0.05em;
+  color: var(--ink-5);
+}
+
+.entry__title {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.entry__topic,
+.entry__org {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-4);
+}
+
+/* ---------- Timeline（About / Experience） ---------- */
+
+.timeline__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  column-gap: 18px;
+}
+
+.timeline__item > * {
+  grid-column: 2;
+}
+
+/* 豎線絕對定位，才會連過每一筆之間的 padding-bottom，不是一截一截的。
+   圓點的外圈用面板底色蓋掉豎線，不需要額外的遮罩元素。 */
+.timeline__item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 10px;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.timeline__item::after {
+  content: "";
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: center;
+  margin-top: 8px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  box-shadow: 0 0 0 4px var(--bg-panel);
+}
+
+.timeline__item--current::after {
+  background: var(--status);
+}
+
+/* ---------- Skills ---------- */
+
+.skills {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+}
+
+.skills__name {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+.skills__list li {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--ink-4);
 }
 
 /* ========================================
    Responsive
    ======================================== */
 
+/* 981–1279：分欄線、漸層硬切點、霧面左緣綁同一個變數，一起往左移 */
+@media (max-width: 1279px) {
+  :root {
+    --split: clamp(480px, 47vw, 600px);
+    --name-size: clamp(64px, 6.8vw, 88px);
+  }
+
+  .index {
+    padding: 0 48px;
+  }
+}
+
+/* ≤980：改成上下排列，照片縮成頁首，不使用霧面 */
 @media (max-width: 980px) {
-  #main article {
-    padding: 2rem;
-    font-size: 0.95rem;
+  :root {
+    --name-size: clamp(44px, 11vw, 64px);
   }
 
-  h2.major {
-    font-size: 1.75rem;
-  }
-  h3 {
-    font-size: 1.25rem;
+  .backdrop__photo {
+    inset: 0 0 auto 0;
+    height: 200px;
+    background-size: cover;
+    background-position: 40% 40%;
   }
 
-  .skills-grid {
-    grid-template-columns: 1fr;
+  .backdrop__sweep {
+    inset: 0 0 auto 0;
+    height: 200px;
+    background: linear-gradient(180deg, rgba(21, 25, 27, 0.2), var(--bg-panel));
+  }
+
+  .backdrop__foot,
+  .backdrop__frost {
+    display: none;
+  }
+
+  .backdrop {
+    position: absolute;
+    bottom: auto;
+    height: 200px;
+  }
+
+  body {
+    background: var(--bg-panel);
+  }
+
+  .home {
+    grid-template-rows: var(--header-h) auto auto auto;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .masthead,
+  .colophon {
+    grid-column: 1;
+  }
+
+  .intro {
+    padding: 148px 24px 32px;
+    border-right: 0;
+  }
+
+  .index {
+    padding: 0 24px 32px;
+  }
+
+  .index__arrow {
+    display: none;
+  }
+
+  .index__link::before {
+    left: -12px;
+  }
+
+  .colophon {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 24px;
+    height: auto;
+  }
+
+  .panel {
+    padding: 40px 24px;
+  }
+}
+
+/* 沒有 JS 時兩個語系都在列上，三欄放不下，說明換到標題下面 */
+html:not(.js) .index__link {
+  grid-template-columns: 44px minmax(0, 1fr);
+  align-items: start;
+  row-gap: 2px;
+}
+
+html:not(.js) .index__num {
+  grid-row: 1 / span 2;
+  align-self: center;
+}
+
+html:not(.js) .index__title,
+html:not(.js) .index__desc {
+  grid-column: 2;
+}
+
+/* 窄到放不下三欄時同樣處理 */
+@media (max-width: 560px) {
+  .index__link {
+    grid-template-columns: 44px minmax(0, 1fr);
+    align-items: start;
+    row-gap: 2px;
+    padding: 12px 0;
+  }
+
+  .index__num {
+    grid-row: 1 / span 2;
+    align-self: center;
+  }
+
+  .index__title {
+    grid-column: 2;
+    font-size: 20px;
+  }
+
+  .index__desc {
+    grid-column: 2;
   }
 }
 
 @media (max-width: 736px) {
-  #main article {
-    padding: 1.5rem;
-    width: 95%;
+  .masthead {
+    padding: 0 20px;
   }
 
-  h2.major {
-    font-size: 1.5rem;
+  /* 觸控區至少 44x44：桌面的 4px 10px 在手機上點不準 */
+  .langswitch__option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0 10px;
   }
-  h3 {
-    font-size: 1.15rem;
+
+  .colophon__links {
+    flex-wrap: wrap;
+    border-radius: 4px;
   }
-  h4 {
-    font-size: 1rem;
+
+  /* 換行後左邊框會變成列與列之間的分隔，改用上邊框 */
+  .colophon__link {
+    flex: 1 0 auto;
+    height: 44px;
+    line-height: 44px;
+    text-align: center;
+  }
+
+  .panel__title {
+    font-size: 36px;
   }
 }
 
 /* ========================================
-   Print
+   Motion / Print
    ======================================== */
 
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/*
+ * 列印：整份樣式是為深色底設計的，白色文字與線條印在白紙上等於消失。
+ * 與其逐條覆寫顏色，直接在這裡重新定義 token，所有用到它們的規則一次跟著變深。
+ * 數值都是對白紙 >= 4.5:1（最淡的 #555 是 7.4:1）。
+ */
 @media print {
-  #main article {
-    background: white;
-    color: black;
-    max-height: none;
-    padding: 0;
-    width: 100%;
+  :root {
+    --ink: #000000;
+    --ink-2: #111111;
+    --ink-3: #333333;
+    --ink-4: #333333;
+    --ink-5: #555555;
+
+    --rule-strong: #888888;
+    --rule: #bbbbbb;
+    --rule-soft: #bbbbbb;
+
+    --bg-base: #ffffff;
+    --bg-panel: #ffffff;
+    /* 狀態色在單色列印下分不出來，改用深色，靠版面位置表達 */
+    --status: #333333;
   }
 
-  h2.major,
-  h3,
-  h4 {
-    color: black;
-  }
-
-  #bg {
+  /* 純導覽的部分不印：背景、頁首列（含語系切換）、目錄、頁尾連結與快捷鍵提示 */
+  .backdrop,
+  .masthead,
+  .index,
+  .colophon {
     display: none;
+  }
+
+  body {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  .sections {
+    background: #ffffff;
+  }
+
+  /* 首頁在螢幕上是整個視窗高、內容靠底對齊；印出來會變成大半張空白頁 */
+  .home {
+    display: block;
+    min-height: 0;
+  }
+
+  /* 左欄的分欄線與名字陰影是螢幕上的裝飾 */
+  .intro {
+    justify-content: flex-start;
+    padding: 0 0 24px;
+    border-right: 0;
+  }
+
+  .intro__name {
+    text-shadow: none;
+  }
+
+  .panel {
+    max-width: none;
+    padding: 24px 0 0;
+    border-top: 0;
+  }
+
+  /* 時間軸的豎線與圓點原本是背景色，而列印預設不印背景；圓點改用框線畫。
+     這兩個值是一次性的裝飾色，沒有走 token，所以在這裡個別覆寫 */
+  .timeline__item::before {
+    background: var(--rule);
+  }
+
+  .timeline__item::after {
+    background: #ffffff;
+    border: 1px solid var(--ink-3);
+    box-shadow: none;
+  }
+
+  .timeline__item--current::after {
+    background: var(--ink-3);
   }
 }

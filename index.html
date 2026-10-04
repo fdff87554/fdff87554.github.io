@@ -1,9 +1,4 @@
 <!doctype html>
-<!--
-	Dimension by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -20,480 +15,725 @@
       type="font/woff2"
       crossorigin
     />
+    <link
+      rel="preload"
+      href="assets/fonts/maple-mono-nf-cn-semibold.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <link rel="icon" href="images/avatar.png" />
-    <link rel="stylesheet" href="assets/css/main.css" />
     <link rel="stylesheet" href="assets/css/site.css" />
-    <noscript>
-      <link rel="stylesheet" href="assets/css/noscript.css" />
-    </noscript>
+    <!--
+      Flags JS support and resolves the language before first paint.
+      Comments in this file stay in English on purpose: subset-fonts.sh treats
+      the raw HTML as the character source, so CJK comments would be baked into
+      the shipped font subset. The reasoning lives in site.css and main.js.
+    -->
+    <script>
+      (function () {
+        var root = document.documentElement;
+        var pick = function (value) {
+          // Allow-list; never write the raw param into the DOM
+          return value === "zh-TW" || value === "zh-tw" ? "zh-TW" : null;
+        };
+        var stored = null;
+        try {
+          stored = localStorage.getItem("lang");
+        } catch (e) {
+          stored = null;
+        }
+        var fromQuery = new URLSearchParams(location.search).get("lang");
+        var lang =
+          pick(fromQuery) ||
+          (fromQuery === "en" ? "en" : null) ||
+          pick(stored) ||
+          (stored === "en" ? "en" : null) ||
+          (/^zh/i.test(navigator.language || "") ? "zh-TW" : "en");
+        // data-lang drives the CSS switch; lang drives AT and :lang()
+        root.dataset.lang = lang;
+        root.lang = lang;
+        root.classList.add("js");
+      })();
+    </script>
   </head>
 
-  <body class="is-preload">
-    <div id="wrapper">
-      <header id="header">
-        <div class="logo">
-          <img
-            src="images/avatar.png"
-            width="100"
-            height="100"
-            alt="Crazyfire Lee"
-          />
+  <body>
+    <!-- Four backdrop layers, bottom to top: photo, sweep, foot, frost -->
+    <div class="backdrop" aria-hidden="true">
+      <div class="backdrop__photo"></div>
+      <div class="backdrop__sweep"></div>
+      <div class="backdrop__foot"></div>
+      <div class="backdrop__frost"></div>
+    </div>
+
+    <div class="home">
+      <header class="masthead">
+        <a class="masthead__logo" href="#">&lt;Crazyfire/&gt;</a>
+        <div class="langswitch" role="group" aria-label="Language">
+          <a
+            class="langswitch__option"
+            href="?lang=en"
+            hreflang="en"
+            data-lang-option="en"
+            >EN</a
+          >
+          <a
+            class="langswitch__option"
+            href="?lang=zh-tw"
+            hreflang="zh-TW"
+            lang="zh-TW"
+            data-lang-option="zh-TW"
+            >中文</a
+          >
         </div>
-        <div class="content">
-          <div class="inner">
-            <h1>Crazyfire Lee</h1>
-            <p>
-              Taipei, Taiwan 🇹🇼 <br />
-              Machine Learning / Web Development / Information Security
-            </p>
-          </div>
-        </div>
-        <nav>
-          <ul>
-            <li><a href="#intro_en">Intro</a></li>
-            <li><a href="#intro_zhtw" lang="zh-TW">簡介</a></li>
-            <li>
-              <a
-                href="https://blog.crazyfirelee.tw"
-                target="_blank"
-                rel="noopener noreferrer"
-                >Blog</a
-              >
-            </li>
-            <li>
-              <a
-                href="https://github.com/fdff87554"
-                target="_blank"
-                rel="noopener noreferrer"
-                >Github</a
-              >
-            </li>
-            <li>
-              <a
-                href="https://www.linkedin.com/in/darren-lee-69790b187/"
-                target="_blank"
-                rel="noopener noreferrer"
-                >LinkedIn</a
-              >
-            </li>
-            <li><a href="mailto:me@crazyfirelee.tw">Email</a></li>
-          </ul>
-        </nav>
       </header>
 
-      <main id="main">
-        <article id="intro_en">
-          <a href="#" class="close">Close</a>
-          <h2 class="major" tabindex="-1">About Me</h2>
-          <section class="section experience" aria-label="Experience">
-            <h3>Experience</h3>
-            <div class="job">
-              <h4>Threat Research Team Software Engineer</h4>
-              <div class="company">TXOne Networks Inc.</div>
-              <div class="date">Apr. 2025 - Present</div>
-            </div>
-            <div class="job">
-              <h4>Threat Signature Research Team Intern</h4>
-              <div class="company">TXOne Networks Inc.</div>
-              <div class="date">Apr. 2023 - Sept. 2024</div>
-            </div>
-            <div class="job">
-              <h4>AI Development Assistant Engineer (Intern)</h4>
-              <div class="company">
-                Wiwynn - AI &amp; Data Development Department
-              </div>
-              <div class="date">Mar. 2022 - Jul. 2022</div>
-            </div>
-            <div class="job">
-              <h4>Deep Learning Teaching Assistant</h4>
-              <div class="company">
-                Fu Jen Catholic University - Department of Computer Science
-              </div>
-              <div class="date">Jun. 2021 - Feb. 2022</div>
-            </div>
-            <div class="job">
-              <h4>Smart Manufacturing Transformation Intern</h4>
-              <div class="company">
-                AUO Corporation - A+ Summer Internship Program
-              </div>
-              <div class="date">Jul. 2020 - Aug. 2020</div>
-            </div>
-            <h3>Activities</h3>
-            <div class="job">
-              <h4>AIS3 Junior (Advanced Information Security Summer School)</h4>
-              <div class="company">Speaker / Teaching Assistant</div>
-              <div class="date">2022 - 2024</div>
-            </div>
-            <div class="job">
-              <h4>OPass Android</h4>
-              <div class="company">Co-maintainer</div>
-              <div class="date">2022 - Present</div>
-            </div>
-            <div class="job">
-              <h4>
-                NISRA (Networks and Information Security Research Association)
-              </h4>
-              <div class="company">Vice President</div>
-              <div class="date">2019 - 2020</div>
-            </div>
-          </section>
-          <section class="section education" aria-label="Education">
-            <h3>Education</h3>
-            <div class="education-item">
-              <h4>Master's Degree in Institute of Information Security</h4>
-              <div class="institution">National Tsing Hua University</div>
-              <div class="date">Sept. 2022 - Jun. 2024</div>
-            </div>
-            <div class="education-item">
-              <h4>
-                Bachelor's Degree in Computer Science and Information
-                Engineering
-              </h4>
-              <div class="institution">Fu Jen Catholic University</div>
-              <div class="date">Sept. 2018 - Jun. 2022</div>
-            </div>
-          </section>
-          <section class="section skills" aria-label="Technical Skills">
-            <h3>Technical Skills</h3>
-            <div class="skills-grid">
-              <div class="skill-category">
-                <h4>Deep Learning</h4>
-                <ul>
-                  <li>TensorFlow</li>
-                  <li>PyTorch</li>
-                </ul>
-              </div>
-              <div class="skill-category">
-                <h4>Development &amp; Project Management</h4>
-                <ul>
-                  <li>NextJS</li>
-                  <li>ReactJS</li>
-                  <li>Docker</li>
-                  <li>Kubernetes</li>
-                </ul>
-              </div>
-            </div>
-          </section>
-          <section class="section projects" aria-label="Projects &amp; Papers">
-            <h3>Projects &amp; Papers</h3>
-            <div class="projects-grid">
-              <div class="project-item">
-                <h4>
-                  Enhancing AI Model Training Efficiency through Distributed GPU
-                  Management
-                </h4>
-                <div class="institution">
-                  Master's thesis from National Tsing Hua University 2024
-                </div>
-              </div>
-              <div class="project-item">
-                <h4>
-                  Evolutionary KMeans for Industrial Control Anomaly Detection
-                </h4>
-                <div class="institution">ARIS 2023 Research Paper</div>
-              </div>
-              <div class="project-item">
-                <h4>Classifier and Clusterer Combine Method Research</h4>
-                <div class="institution">
-                  Wiwynn Corporation Internal Project
-                </div>
-              </div>
-              <div class="project-item">
-                <h4>Unsupervised Learning in Industrial Control Security</h4>
-                <div class="institution">
-                  AIS3 Critical Infrastructure Group Project, 2021
-                </div>
-              </div>
-              <div class="project-item">
-                <h4>Time Series Prediction for ICS Anomaly Detection</h4>
-                <div class="institution">
-                  Bionic Computing Course Project, 2021
-                </div>
-              </div>
-              <div class="project-item">
-                <h4>Deep Learning for Hidden Watermarking</h4>
-                <div class="institution">
-                  Fu Jen Catholic University Graduation Project
-                </div>
-              </div>
-              <div class="project-item">
-                <h4>Security Vulnerability Lab Environment</h4>
-                <div class="institution">NISRA Training Platform</div>
-              </div>
-            </div>
-          </section>
-          <section class="section presentations" aria-label="Speaking">
-            <h3>Speaking</h3>
-            <div class="presentations-grid">
-              <div class="presentation-item">
-                <h4>Financial Industry Cybersecurity Workshop</h4>
-                <div class="event">
-                  AI Cybersecurity for Everyone: New Generation Cybersecurity
-                  Challenges
-                </div>
-                <div class="role">Speaker</div>
-                <div class="date">2025</div>
-              </div>
-              <div class="presentation-item">
-                <h4>AIS3 2025 Alumni Sharing Session</h4>
-                <div class="event">
-                  The Path of Cybersecurity: Are You Ready?
-                </div>
-                <div class="role">Speaker</div>
-                <div class="date">2025</div>
-              </div>
-              <div class="presentation-item">
-                <h4>CHJHS Cybersecurity Workshop</h4>
-                <div class="event">Unveiling the Mysteries of Hackers</div>
-                <div class="role">Speaker</div>
-                <div class="date">2025</div>
-              </div>
-              <div class="presentation-item">
-                <h4>Financial Industry Cybersecurity Workshop</h4>
-                <div class="event">Introduction to AI and AI Security</div>
-                <div class="role">Speaker</div>
-                <div class="date">2024</div>
-              </div>
-              <div class="presentation-item">
-                <h4>AIS3 Junior Program</h4>
-                <div class="event">
-                  Introduction to Information Security and AI
-                </div>
-                <div class="role">Speaker</div>
-                <div class="date">2024</div>
-              </div>
-              <div class="presentation-item">
-                <h4>Fushing Senior High School</h4>
-                <div class="event">
-                  Network Security and Cybersecurity Workshop
-                </div>
-                <div class="role">Speaker</div>
-                <div class="date">2024</div>
-              </div>
-              <div class="presentation-item">
-                <h4>Yungping High School</h4>
-                <div class="event">Introduction to Cybersecurity World</div>
-                <div class="role">Guest Speaker</div>
-                <div class="date">2024</div>
-              </div>
-              <div class="presentation-item">
-                <h4>NISRA Workshop</h4>
-                <div class="event">VPN Security Challenge</div>
-                <div class="role">Speaker</div>
-                <div class="date">2024</div>
-              </div>
-              <div class="presentation-item">
-                <h4>AIS3 Club</h4>
-                <div class="event">Web Security Workshop</div>
-                <div class="role">Speaker</div>
-                <div class="date">2023</div>
-              </div>
-              <div class="presentation-item">
-                <h4>AIS3 Junior Program</h4>
-                <div class="role">Teaching Assistant</div>
-                <div class="date">2022 - 2023</div>
-              </div>
-            </div>
-          </section>
-        </article>
+      <div class="intro">
+        <p class="intro__greeting">
+          <img
+            class="intro__avatar"
+            src="images/avatar.png"
+            width="76"
+            height="76"
+            alt="Crazyfire Lee"
+          />
+          <span class="intro__hello">Hi, I'm Crazyfire.</span>
+        </p>
+        <h1 class="intro__name">Crazyfire<br />Lee</h1>
+        <div class="intro__tagline">
+          <p class="intro__role">
+            <span class="lang" lang="en"
+              >Threat Research Team Software Engineer at TXOne Networks.</span
+            ><span class="lang" lang="zh-TW"
+              >睿控網安 (TXOne Networks) 威脅研究團隊軟體工程師。</span
+            >
+          </p>
+          <p class="intro__where">Taipei, Taiwan · ML / Web / InfoSec</p>
+        </div>
+      </div>
 
-        <article id="intro_zhtw" lang="zh-TW">
-          <a href="#" class="close">關閉</a>
-          <h2 class="major" tabindex="-1">關於我</h2>
-          <section class="section experience" aria-label="工作經歷">
-            <h3>工作經歷</h3>
-            <div class="job">
-              <h4>威脅研究團隊軟體工程師</h4>
-              <div class="company">睿控網安 (TXOne Networks)</div>
-              <div class="date">2025年4月 - 現在</div>
-            </div>
-            <div class="job">
-              <h4>威脅情資研究實習生</h4>
-              <div class="company">睿控網安 (TXOne Networks)</div>
-              <div class="date">2023年4月 - 2024年9月</div>
-            </div>
-            <div class="job">
-              <h4>AI開發助理工程師（實習）</h4>
-              <div class="company">緯穎科技服務 - AI與數據智慧開發部</div>
-              <div class="date">2022年3月 - 2022年7月</div>
-            </div>
-            <div class="job">
-              <h4>深度學習課程助教</h4>
-              <div class="company">輔仁大學資訊工程學系</div>
-              <div class="date">2021年6月 - 2022年2月</div>
-            </div>
-            <div class="job">
-              <h4>智慧製造轉型實習生</h4>
-              <div class="company">友達光電 - A+ 暑期實習計畫</div>
-              <div class="date">2020年7月 - 2020年8月</div>
-            </div>
-            <h3>社群活動</h3>
-            <div class="job">
-              <h4>教育部資安人才培育計畫（AIS3 Junior）</h4>
-              <div class="company">講師 / 助教</div>
-              <div class="date">2022 - 2024</div>
-            </div>
-            <div class="job">
-              <h4>OPass Android 開源專案</h4>
-              <div class="company">共同維護者</div>
-              <div class="date">2022 - 至今</div>
-            </div>
-            <div class="job">
-              <h4>輔大資訊安全研究會（NISRA）</h4>
-              <div class="company">副會長</div>
-              <div class="date">2019 - 2020</div>
-            </div>
-          </section>
-          <section class="section education" aria-label="學歷">
-            <h3>學歷</h3>
-            <div class="education-item">
-              <h4>資訊安全研究所 碩士</h4>
-              <div class="institution">國立清華大學</div>
-              <div class="date">2022年9月 - 2024年6月</div>
-            </div>
-            <div class="education-item">
-              <h4>資訊工程學系 學士</h4>
-              <div class="institution">天主教輔仁大學</div>
-              <div class="date">2018年9月 - 2022年6月</div>
-            </div>
-          </section>
-          <section class="section skills" aria-label="技術能力">
-            <h3>技術能力</h3>
-            <div class="skills-grid">
-              <div class="skill-category">
-                <h4>深度學習</h4>
-                <ul>
-                  <li>TensorFlow</li>
-                  <li>PyTorch</li>
-                </ul>
-              </div>
-              <div class="skill-category">
-                <h4>開發與專案管理</h4>
-                <ul>
-                  <li>NextJS</li>
-                  <li>ReactJS</li>
-                  <li>Docker</li>
-                  <li>Kubernetes</li>
-                </ul>
-              </div>
-            </div>
-          </section>
-          <section class="section projects" aria-label="專案研究與論文">
-            <h3>專案研究與論文</h3>
-            <div class="projects-grid">
-              <div class="project-item">
-                <h4>透過分散式 GPU 管理提升 AI 模型訓練效率</h4>
-                <div class="institution">國立清華大學 2024 碩士論文</div>
-              </div>
-              <div class="project-item">
-                <h4>
-                  Evolutionary KMeans for Industrial Control Anomaly Detection
-                </h4>
-                <div class="institution">ARIS 2023 研究論文</div>
-              </div>
-              <div class="project-item">
-                <h4>分類與分群模型結合方法研究</h4>
-                <div class="institution">緯穎科技服務內部專案</div>
-              </div>
-              <div class="project-item">
-                <h4>工業控制安全之非監督式學習應用</h4>
-                <div class="institution">AIS3 關鍵基礎設施組專題, 2021</div>
-              </div>
-              <div class="project-item">
-                <h4>工控系統時序預測異常檢測研究</h4>
-                <div class="institution">仿生計算課程專題, 2021</div>
-              </div>
-              <div class="project-item">
-                <h4>深度學習於隱藏式浮水印之應用</h4>
-                <div class="institution">輔仁大學畢業專題</div>
-              </div>
-              <div class="project-item">
-                <h4>資安漏洞靶機環境建置</h4>
-                <div class="institution">NISRA 教學平台</div>
-              </div>
-            </div>
-          </section>
-          <section class="section presentations" aria-label="演講與授課經驗">
-            <h3>演講與授課經驗</h3>
-            <div class="presentations-grid">
-              <div class="presentation-item">
-                <h4>金融業資安研習</h4>
-                <div class="event">AI 資安你我他，新世代的資安問題</div>
-                <div class="role">講師</div>
-                <div class="date">2025</div>
-              </div>
-              <div class="presentation-item">
-                <h4>AIS3 2025 校友分享會</h4>
-                <div class="event">資安這條路，你準備好了嗎？</div>
-                <div class="role">講師</div>
-                <div class="date">2025</div>
-              </div>
-              <div class="presentation-item">
-                <h4>CHJHS 資安工作坊</h4>
-                <div class="event">揭開駭客的神秘面紗</div>
-                <div class="role">講師</div>
-                <div class="date">2025</div>
-              </div>
-              <div class="presentation-item">
-                <h4>金融業資安研習</h4>
-                <div class="event">AI 導論與 AI 資訊安全</div>
-                <div class="role">講師</div>
-                <div class="date">2024</div>
-              </div>
-              <div class="presentation-item">
-                <h4>教育部資安人才培育計畫</h4>
-                <div class="event">資訊安全與人工智慧概論</div>
-                <div class="role">講師</div>
-                <div class="date">2024</div>
-              </div>
-              <div class="presentation-item">
-                <h4>復興實驗高級中學</h4>
-                <div class="event">資安與網路安全工作坊</div>
-                <div class="role">講師</div>
-                <div class="date">2024</div>
-              </div>
-              <div class="presentation-item">
-                <h4>永平高級中學</h4>
-                <div class="event">資訊安全世界導論</div>
-                <div class="role">講師</div>
-                <div class="date">2024</div>
-              </div>
-              <div class="presentation-item">
-                <h4>輔大資訊安全研究會</h4>
-                <div class="event">VPN 資安挑戰賽</div>
-                <div class="role">講師</div>
-                <div class="date">2024</div>
-              </div>
-              <div class="presentation-item">
-                <h4>AIS3 社群講座</h4>
-                <div class="event">網頁安全實務工作坊</div>
-                <div class="role">講師</div>
-                <div class="date">2023</div>
-              </div>
-              <div class="presentation-item">
-                <h4>教育部資安人才培育計畫</h4>
-                <div class="role">助教</div>
-                <div class="date">2022 - 2023</div>
-              </div>
-            </div>
-          </section>
-        </article>
-      </main>
+      <nav class="index" aria-label="Sections">
+        <ol class="index__list" role="list">
+          <li class="index__item" data-section="about">
+            <a class="index__link" href="#about">
+              <span class="index__num" aria-hidden="true"></span>
+              <span class="index__title"
+                ><span class="lang" lang="en">About</span
+                ><span class="lang" lang="zh-TW">關於我</span></span
+              >
+              <span class="index__desc"
+                ><span class="lang" lang="en"
+                  >Experience · Education · Skills</span
+                ><span class="lang" lang="zh-TW"
+                  >工作經歷 · 學歷 · 技術能力</span
+                ></span
+              >
+              <span class="index__arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li class="index__item" data-section="projects">
+            <a class="index__link" href="#projects">
+              <span class="index__num" aria-hidden="true"></span>
+              <span class="index__title"
+                ><span class="lang" lang="en">Projects &amp; Papers</span
+                ><span class="lang" lang="zh-TW">專案研究與論文</span></span
+              >
+              <span class="index__desc"
+                ><span class="lang" lang="en">7 entries</span
+                ><span class="lang" lang="zh-TW">7 筆</span></span
+              >
+              <span class="index__arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li class="index__item" data-section="speaking">
+            <a class="index__link" href="#speaking">
+              <span class="index__num" aria-hidden="true"></span>
+              <span class="index__title"
+                ><span class="lang" lang="en">Speaking</span
+                ><span class="lang" lang="zh-TW">演講與授課經驗</span></span
+              >
+              <span class="index__desc"
+                ><span class="lang" lang="en">10 entries · 2022–2025</span
+                ><span class="lang" lang="zh-TW">10 筆 · 2022–2025</span></span
+              >
+              <span class="index__arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+          <!--
+            Now has no content yet, so its row and section are both absent by
+            design. Add them back together; numbering re-flows on its own.
+          -->
+          <li class="index__item" data-section="github">
+            <a class="index__link" href="#github">
+              <span class="index__num" aria-hidden="true"></span>
+              <span class="index__title">GitHub</span>
+              <span class="index__desc"
+                ><span class="lang" lang="en">Recent repositories</span
+                ><span class="lang" lang="zh-TW">最近的 repository</span></span
+              >
+              <span class="index__arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li class="index__item" data-external>
+            <a
+              class="index__link"
+              href="https://blog.crazyfirelee.tw"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="index__num" aria-hidden="true"></span>
+              <span class="index__title"
+                ><span class="lang" lang="en">Writing</span
+                ><span class="lang" lang="zh-TW">文章</span></span
+              >
+              <span class="index__desc">blog.crazyfirelee.tw ↗</span>
+              <span class="index__arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+        </ol>
+      </nav>
 
-      <footer id="footer">
-        <p class="copyright">
-          © 2026 Crazyfire Lee. Design:
+      <footer class="colophon">
+        <div class="colophon__links">
           <a
-            href="https://html5up.net"
-            rel="noopener noreferrer"
+            class="colophon__link"
+            href="https://blog.crazyfirelee.tw"
             target="_blank"
-            >HTML5 UP</a
-          >.
+            rel="noopener noreferrer"
+            >Blog ↗</a
+          >
+          <a
+            class="colophon__link"
+            href="https://github.com/fdff87554"
+            target="_blank"
+            rel="noopener noreferrer"
+            >GitHub ↗</a
+          >
+          <a
+            class="colophon__link"
+            href="https://www.linkedin.com/in/darren-lee-69790b187/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >LinkedIn ↗</a
+          >
+          <a class="colophon__link" href="mailto:me@crazyfirelee.tw">Email</a>
+        </div>
+        <p class="colophon__note">
+          <!-- Rewritten by main.js; this value is the correct no-JS one -->
+          <span class="colophon__range">1–5</span>
+          <span class="lang" lang="en">to open</span
+          ><span class="lang" lang="zh-TW">開啟</span>
+          · © 2026 CRAZYFIRE LEE
         </p>
       </footer>
     </div>
 
-    <div id="bg"></div>
+    <main class="sections">
+      <section class="panel" id="about" aria-labelledby="about-title">
+        <h2 class="panel__title" id="about-title" tabindex="-1">
+          <span class="lang" lang="en">About</span
+          ><span class="lang" lang="zh-TW">關於我</span>
+        </h2>
+        <!-- Legacy per-language links, kept as real scroll anchors -->
+        <span id="intro_en" class="anchor"></span>
+        <span id="intro_zhtw" class="anchor"></span>
+
+        <h3 class="panel__group">
+          <span class="lang" lang="en">Experience</span
+          ><span class="lang" lang="zh-TW">工作經歷</span>
+        </h3>
+        <ol class="timeline" role="list" data-group="experience">
+          <li class="timeline__item timeline__item--current">
+            <p class="entry__date">
+              <span class="lang" lang="en">Apr. 2025 - Present</span
+              ><span class="lang" lang="zh-TW">2025年4月 - 現在</span>
+            </p>
+            <p class="entry__title">
+              <span class="lang" lang="en"
+                >Threat Research Team Software Engineer</span
+              ><span class="lang" lang="zh-TW">威脅研究團隊軟體工程師</span>
+            </p>
+            <p class="entry__org">
+              <span class="lang" lang="en">TXOne Networks Inc.</span
+              ><span class="lang" lang="zh-TW">睿控網安 (TXOne Networks)</span>
+            </p>
+          </li>
+          <li class="timeline__item">
+            <p class="entry__date">
+              <span class="lang" lang="en">Apr. 2023 - Sept. 2024</span
+              ><span class="lang" lang="zh-TW">2023年4月 - 2024年9月</span>
+            </p>
+            <p class="entry__title">
+              <span class="lang" lang="en"
+                >Threat Signature Research Team Intern</span
+              ><span class="lang" lang="zh-TW">威脅情資研究實習生</span>
+            </p>
+            <p class="entry__org">
+              <span class="lang" lang="en">TXOne Networks Inc.</span
+              ><span class="lang" lang="zh-TW">睿控網安 (TXOne Networks)</span>
+            </p>
+          </li>
+          <li class="timeline__item">
+            <p class="entry__date">
+              <span class="lang" lang="en">Mar. 2022 - Jul. 2022</span
+              ><span class="lang" lang="zh-TW">2022年3月 - 2022年7月</span>
+            </p>
+            <p class="entry__title">
+              <span class="lang" lang="en"
+                >AI Development Assistant Engineer (Intern)</span
+              ><span class="lang" lang="zh-TW">AI開發助理工程師（實習）</span>
+            </p>
+            <p class="entry__org">
+              <span class="lang" lang="en"
+                >Wiwynn - AI &amp; Data Development Department</span
+              ><span class="lang" lang="zh-TW"
+                >緯穎科技服務 - AI與數據智慧開發部</span
+              >
+            </p>
+          </li>
+          <li class="timeline__item">
+            <p class="entry__date">
+              <span class="lang" lang="en">Jun. 2021 - Feb. 2022</span
+              ><span class="lang" lang="zh-TW">2021年6月 - 2022年2月</span>
+            </p>
+            <p class="entry__title">
+              <span class="lang" lang="en"
+                >Deep Learning Teaching Assistant</span
+              ><span class="lang" lang="zh-TW">深度學習課程助教</span>
+            </p>
+            <p class="entry__org">
+              <span class="lang" lang="en"
+                >Fu Jen Catholic University - Department of Computer
+                Science</span
+              ><span class="lang" lang="zh-TW">輔仁大學資訊工程學系</span>
+            </p>
+          </li>
+          <li class="timeline__item">
+            <p class="entry__date">
+              <span class="lang" lang="en">Jul. 2020 - Aug. 2020</span
+              ><span class="lang" lang="zh-TW">2020年7月 - 2020年8月</span>
+            </p>
+            <p class="entry__title">
+              <span class="lang" lang="en"
+                >Smart Manufacturing Transformation Intern</span
+              ><span class="lang" lang="zh-TW">智慧製造轉型實習生</span>
+            </p>
+            <p class="entry__org">
+              <span class="lang" lang="en"
+                >AUO Corporation - A+ Summer Internship Program</span
+              ><span class="lang" lang="zh-TW">友達光電 - A+ 暑期實習計畫</span>
+            </p>
+          </li>
+        </ol>
+
+        <h3 class="panel__group">
+          <span class="lang" lang="en">Activities</span
+          ><span class="lang" lang="zh-TW">社群活動</span>
+        </h3>
+        <ol class="entries" role="list" data-group="activities">
+          <li class="entry">
+            <p class="entry__date">2022 - 2024</p>
+            <p class="entry__title">
+              <span class="lang" lang="en"
+                >AIS3 Junior (Advanced Information Security Summer School)</span
+              ><span class="lang" lang="zh-TW"
+                >教育部資安人才培育計畫（AIS3 Junior）</span
+              >
+            </p>
+            <p class="entry__org">
+              <span class="lang" lang="en">Speaker / Teaching Assistant</span
+              ><span class="lang" lang="zh-TW">講師 / 助教</span>
+            </p>
+          </li>
+          <li class="entry">
+            <p class="entry__date">
+              <span class="lang" lang="en">2022 - Present</span
+              ><span class="lang" lang="zh-TW">2022 - 至今</span>
+            </p>
+            <p class="entry__title">
+              <span class="lang" lang="en">OPass Android</span
+              ><span class="lang" lang="zh-TW">OPass Android 開源專案</span>
+            </p>
+            <p class="entry__org">
+              <span class="lang" lang="en">Co-maintainer</span
+              ><span class="lang" lang="zh-TW">共同維護者</span>
+            </p>
+          </li>
+          <li class="entry">
+            <p class="entry__date">2019 - 2020</p>
+            <p class="entry__title">
+              <span class="lang" lang="en"
+                >NISRA (Networks and Information Security Research
+                Association)</span
+              ><span class="lang" lang="zh-TW"
+                >輔大資訊安全研究會（NISRA）</span
+              >
+            </p>
+            <p class="entry__org">
+              <span class="lang" lang="en">Vice President</span
+              ><span class="lang" lang="zh-TW">副會長</span>
+            </p>
+          </li>
+        </ol>
+
+        <h3 class="panel__group">
+          <span class="lang" lang="en">Education</span
+          ><span class="lang" lang="zh-TW">學歷</span>
+        </h3>
+        <ol class="entries" role="list" data-group="education">
+          <li class="entry">
+            <p class="entry__date">
+              <span class="lang" lang="en">Sept. 2022 - Jun. 2024</span
+              ><span class="lang" lang="zh-TW">2022年9月 - 2024年6月</span>
+            </p>
+            <p class="entry__title">
+              <span class="lang" lang="en"
+                >Master's Degree in Institute of Information Security</span
+              ><span class="lang" lang="zh-TW">資訊安全研究所 碩士</span>
+            </p>
+            <p class="entry__org">
+              <span class="lang" lang="en">National Tsing Hua University</span
+              ><span class="lang" lang="zh-TW">國立清華大學</span>
+            </p>
+          </li>
+          <li class="entry">
+            <p class="entry__date">
+              <span class="lang" lang="en">Sept. 2018 - Jun. 2022</span
+              ><span class="lang" lang="zh-TW">2018年9月 - 2022年6月</span>
+            </p>
+            <p class="entry__title">
+              <span class="lang" lang="en"
+                >Bachelor's Degree in Computer Science and Information
+                Engineering</span
+              ><span class="lang" lang="zh-TW">資訊工程學系 學士</span>
+            </p>
+            <p class="entry__org">
+              <span class="lang" lang="en">Fu Jen Catholic University</span
+              ><span class="lang" lang="zh-TW">天主教輔仁大學</span>
+            </p>
+          </li>
+        </ol>
+
+        <h3 class="panel__group">
+          <span class="lang" lang="en">Technical Skills</span
+          ><span class="lang" lang="zh-TW">技術能力</span>
+        </h3>
+        <div class="skills" data-group="skills">
+          <div class="skills__group">
+            <p class="skills__name">
+              <span class="lang" lang="en">Deep Learning</span
+              ><span class="lang" lang="zh-TW">深度學習</span>
+            </p>
+            <ul class="skills__list" role="list">
+              <li>TensorFlow</li>
+              <li>PyTorch</li>
+            </ul>
+          </div>
+          <div class="skills__group">
+            <p class="skills__name">
+              <span class="lang" lang="en"
+                >Development &amp; Project Management</span
+              ><span class="lang" lang="zh-TW">開發與專案管理</span>
+            </p>
+            <ul class="skills__list" role="list">
+              <li>NextJS</li>
+              <li>ReactJS</li>
+              <li>Docker</li>
+              <li>Kubernetes</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="projects" aria-labelledby="projects-title">
+        <h2 class="panel__title" id="projects-title" tabindex="-1">
+          <span class="lang" lang="en">Projects &amp; Papers</span
+          ><span class="lang" lang="zh-TW">專案研究與論文</span>
+        </h2>
+        <ol class="entries" role="list" data-group="projects">
+          <li class="entry">
+            <p class="entry__title">
+              <span class="lang" lang="en"
+                >Enhancing AI Model Training Efficiency through Distributed GPU
+                Management</span
+              ><span class="lang" lang="zh-TW"
+                >透過分散式 GPU 管理提升 AI 模型訓練效率</span
+              >
+            </p>
+            <p class="entry__org">
+              <span class="lang" lang="en"
+                >Master's thesis from National Tsing Hua University 2024</span
+              ><span class="lang" lang="zh-TW">國立清華大學 2024 碩士論文</span>
+            </p>
+          </li>
+          <li class="entry">
+            <p class="entry__title">
+              Evolutionary KMeans for Industrial Control Anomaly Detection
+            </p>
+            <p class="entry__org">
+              <span class="lang" lang="en">ARIS 2023 Research Paper</span
+              ><span class="lang" lang="zh-TW">ARIS 2023 研究論文</span>
+            </p>
+          </li>
+          <li class="entry">
+            <p class="entry__title">
+              <span class="lang" lang="en"
+                >Classifier and Clusterer Combine Method Research</span
+              ><span class="lang" lang="zh-TW">分類與分群模型結合方法研究</span>
+            </p>
+            <p class="entry__org">
+              <span class="lang" lang="en"
+                >Wiwynn Corporation Internal Project</span
+              ><span class="lang" lang="zh-TW">緯穎科技服務內部專案</span>
+            </p>
+          </li>
+          <li class="entry">
+            <p class="entry__title">
+              <span class="lang" lang="en"
+                >Unsupervised Learning in Industrial Control Security</span
+              ><span class="lang" lang="zh-TW"
+                >工業控制安全之非監督式學習應用</span
+              >
+            </p>
+            <p class="entry__org">
+              <span class="lang" lang="en"
+                >AIS3 Critical Infrastructure Group Project, 2021</span
+              ><span class="lang" lang="zh-TW"
+                >AIS3 關鍵基礎設施組專題, 2021</span
+              >
+            </p>
+          </li>
+          <li class="entry">
+            <p class="entry__title">
+              <span class="lang" lang="en"
+                >Time Series Prediction for ICS Anomaly Detection</span
+              ><span class="lang" lang="zh-TW"
+                >工控系統時序預測異常檢測研究</span
+              >
+            </p>
+            <p class="entry__org">
+              <span class="lang" lang="en"
+                >Bionic Computing Course Project, 2021</span
+              ><span class="lang" lang="zh-TW">仿生計算課程專題, 2021</span>
+            </p>
+          </li>
+          <li class="entry">
+            <p class="entry__title">
+              <span class="lang" lang="en"
+                >Deep Learning for Hidden Watermarking</span
+              ><span class="lang" lang="zh-TW"
+                >深度學習於隱藏式浮水印之應用</span
+              >
+            </p>
+            <p class="entry__org">
+              <span class="lang" lang="en"
+                >Fu Jen Catholic University Graduation Project</span
+              ><span class="lang" lang="zh-TW">輔仁大學畢業專題</span>
+            </p>
+          </li>
+          <li class="entry">
+            <p class="entry__title">
+              <span class="lang" lang="en"
+                >Security Vulnerability Lab Environment</span
+              ><span class="lang" lang="zh-TW">資安漏洞靶機環境建置</span>
+            </p>
+            <p class="entry__org">
+              <span class="lang" lang="en">NISRA Training Platform</span
+              ><span class="lang" lang="zh-TW">NISRA 教學平台</span>
+            </p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="panel" id="speaking" aria-labelledby="speaking-title">
+        <h2 class="panel__title" id="speaking-title" tabindex="-1">
+          <span class="lang" lang="en">Speaking</span
+          ><span class="lang" lang="zh-TW">演講與授課經驗</span>
+        </h2>
+        <ol class="entries" role="list" data-group="speaking">
+          <li class="entry">
+            <p class="entry__date">2025</p>
+            <p class="entry__title">
+              <span class="lang" lang="en"
+                >Financial Industry Cybersecurity Workshop</span
+              ><span class="lang" lang="zh-TW">金融業資安研習</span>
+            </p>
+            <p class="entry__topic">
+              <span class="lang" lang="en"
+                >AI Cybersecurity for Everyone: New Generation Cybersecurity
+                Challenges</span
+              ><span class="lang" lang="zh-TW"
+                >AI 資安你我他，新世代的資安問題</span
+              >
+            </p>
+            <p class="entry__org">
+              <span class="lang" lang="en">Speaker</span
+              ><span class="lang" lang="zh-TW">講師</span>
+            </p>
+          </li>
+          <li class="entry">
+            <p class="entry__date">2025</p>
+            <p class="entry__title">
+              <span class="lang" lang="en"
+                >AIS3 2025 Alumni Sharing Session</span
+              ><span class="lang" lang="zh-TW">AIS3 2025 校友分享會</span>
+            </p>
+            <p class="entry__topic">
+              <span class="lang" lang="en"
+                >The Path of Cybersecurity: Are You Ready?</span
+              ><span class="lang" lang="zh-TW">資安這條路，你準備好了嗎？</span>
+            </p>
+            <p class="entry__org">
+              <span class="lang" lang="en">Speaker</span
+              ><span class="lang" lang="zh-TW">講師</span>
+            </p>
+          </li>
+          <li class="entry">
+            <p class="entry__date">2025</p>
+            <p class="entry__title">
+              <span class="lang" lang="en">CHJHS Cybersecurity Workshop</span
+              ><span class="lang" lang="zh-TW">CHJHS 資安工作坊</span>
+            </p>
+            <p class="entry__topic">
+              <span class="lang" lang="en"
+                >Unveiling the Mysteries of Hackers</span
+              ><span class="lang" lang="zh-TW">揭開駭客的神秘面紗</span>
+            </p>
+            <p class="entry__org">
+              <span class="lang" lang="en">Speaker</span
+              ><span class="lang" lang="zh-TW">講師</span>
+            </p>
+          </li>
+          <li class="entry">
+            <p class="entry__date">2024</p>
+            <p class="entry__title">
+              <span class="lang" lang="en"
+                >Financial Industry Cybersecurity Workshop</span
+              ><span class="lang" lang="zh-TW">金融業資安研習</span>
+            </p>
+            <p class="entry__topic">
+              <span class="lang" lang="en"
+                >Introduction to AI and AI Security</span
+              ><span class="lang" lang="zh-TW">AI 導論與 AI 資訊安全</span>
+            </p>
+            <p class="entry__org">
+              <span class="lang" lang="en">Speaker</span
+              ><span class="lang" lang="zh-TW">講師</span>
+            </p>
+          </li>
+          <li class="entry">
+            <p class="entry__date">2024</p>
+            <p class="entry__title">
+              <span class="lang" lang="en">AIS3 Junior Program</span
+              ><span class="lang" lang="zh-TW">教育部資安人才培育計畫</span>
+            </p>
+            <p class="entry__topic">
+              <span class="lang" lang="en"
+                >Introduction to Information Security and AI</span
+              ><span class="lang" lang="zh-TW">資訊安全與人工智慧概論</span>
+            </p>
+            <p class="entry__org">
+              <span class="lang" lang="en">Speaker</span
+              ><span class="lang" lang="zh-TW">講師</span>
+            </p>
+          </li>
+          <li class="entry">
+            <p class="entry__date">2024</p>
+            <p class="entry__title">
+              <span class="lang" lang="en">Fushing Senior High School</span
+              ><span class="lang" lang="zh-TW">復興實驗高級中學</span>
+            </p>
+            <p class="entry__topic">
+              <span class="lang" lang="en"
+                >Network Security and Cybersecurity Workshop</span
+              ><span class="lang" lang="zh-TW">資安與網路安全工作坊</span>
+            </p>
+            <p class="entry__org">
+              <span class="lang" lang="en">Speaker</span
+              ><span class="lang" lang="zh-TW">講師</span>
+            </p>
+          </li>
+          <li class="entry">
+            <p class="entry__date">2024</p>
+            <p class="entry__title">
+              <span class="lang" lang="en">Yungping High School</span
+              ><span class="lang" lang="zh-TW">永平高級中學</span>
+            </p>
+            <p class="entry__topic">
+              <span class="lang" lang="en"
+                >Introduction to Cybersecurity World</span
+              ><span class="lang" lang="zh-TW">資訊安全世界導論</span>
+            </p>
+            <p class="entry__org">
+              <span class="lang" lang="en">Guest Speaker</span
+              ><span class="lang" lang="zh-TW">講師</span>
+            </p>
+          </li>
+          <li class="entry">
+            <p class="entry__date">2024</p>
+            <p class="entry__title">
+              <span class="lang" lang="en">NISRA Workshop</span
+              ><span class="lang" lang="zh-TW">輔大資訊安全研究會</span>
+            </p>
+            <p class="entry__topic">
+              <span class="lang" lang="en">VPN Security Challenge</span
+              ><span class="lang" lang="zh-TW">VPN 資安挑戰賽</span>
+            </p>
+            <p class="entry__org">
+              <span class="lang" lang="en">Speaker</span
+              ><span class="lang" lang="zh-TW">講師</span>
+            </p>
+          </li>
+          <li class="entry">
+            <p class="entry__date">2023</p>
+            <p class="entry__title">
+              <span class="lang" lang="en">AIS3 Club</span
+              ><span class="lang" lang="zh-TW">AIS3 社群講座</span>
+            </p>
+            <p class="entry__topic">
+              <span class="lang" lang="en">Web Security Workshop</span
+              ><span class="lang" lang="zh-TW">網頁安全實務工作坊</span>
+            </p>
+            <p class="entry__org">
+              <span class="lang" lang="en">Speaker</span
+              ><span class="lang" lang="zh-TW">講師</span>
+            </p>
+          </li>
+          <li class="entry">
+            <p class="entry__date">2022 - 2023</p>
+            <p class="entry__title">
+              <span class="lang" lang="en">AIS3 Junior Program</span
+              ><span class="lang" lang="zh-TW">教育部資安人才培育計畫</span>
+            </p>
+            <p class="entry__org">
+              <span class="lang" lang="en">Teaching Assistant</span
+              ><span class="lang" lang="zh-TW">助教</span>
+            </p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="panel" id="github" aria-labelledby="github-title">
+        <h2 class="panel__title" id="github-title" tabindex="-1">GitHub</h2>
+        <!-- github:start - rewritten by scripts/fetch-github.sh, do not edit -->
+        <p class="panel__fallback">
+          <span class="lang" lang="en"
+            >Recent repositories are temporarily unavailable. See the profile
+            instead:</span
+          ><span class="lang" lang="zh-TW"
+            >最近的 repository 暫時無法取得，請改看個人頁：</span
+          >
+          <a
+            href="https://github.com/fdff87554"
+            target="_blank"
+            rel="noopener noreferrer"
+            >github.com/fdff87554 ↗</a
+          >
+        </p>
+        <!-- github:end -->
+      </section>
+    </main>
 
     <script src="assets/js/main.js" defer></script>
   </body>
