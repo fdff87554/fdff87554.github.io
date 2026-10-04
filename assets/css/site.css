@@ -55,6 +55,13 @@
   --name-size: 88px;
   --header-h: 64px;
   --footer-h: 72px;
+
+  /* 抽屜。位移量與時間抽成變數，響應式與 reduced-motion 各覆寫一行就好 */
+  --drawer-w: 680px;
+  --drawer-in: 320ms;
+  --drawer-out: 200ms;
+  --drawer-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --drawer-enter: translateX(24px);
 }
 
 /* ========================================
@@ -496,9 +503,29 @@ html:not(.js) .colophon__note .lang[lang="zh-TW"]::before {
 /* ========================================
    Sections
 
-   PR 1 的呈現：所有段落依序排在首頁下方，這同時就是停用 JS 時的版面。
-   收進抽屜的規則在下一個 PR 加上。
+   同一份 markup 兩種呈現：
+   - 沒有 JS：所有段落依序排在首頁下方（基礎樣式就是這個版面）
+   - 有 JS：段落收進右側抽屜，一次只開一個
+
+   基礎樣式寫無 JS 的版面、把抽屜放在 .drawer-ready 之後，是刻意的方向：
+   讓退路成為預設值，而不是用 <noscript> 去反向覆蓋一份假設有 JS 的樣式。
    ======================================== */
+
+/*
+ * 抽屜的規則全部掛在 .drawer-ready 之下，不是 .js。
+ *
+ * .js 由 <head> 的 inline script 加上，只代表「瀏覽器會跑 JS」；
+ * .drawer-ready 由 main.js 在 init() 成功之後才加，代表「抽屜真的動得了」。
+ * 這個差別很重要：如果把藏段落的規則掛在 .js 上，main.js 一旦載不到、
+ * 解析失敗或在 init() 裡丟例外，段落就會被藏起來而且沒人把它放回來，
+ * 使用者看到的是一個完全沒有內容的頁面——比沒有 JS 還糟。
+ * 用正面確認（成功才啟用）而不是偵測失敗，三種失敗情境都涵蓋。
+ */
+
+/* 只有抽屜版面才有意義的互動元件（抽屜頁首、關閉鈕、遮罩） */
+html:not(.drawer-ready) .js-only {
+  display: none;
+}
 
 .sections {
   position: relative;
@@ -629,6 +656,204 @@ html:not(.js) .colophon__note .lang[lang="zh-TW"]::before {
   font-size: 14px;
   line-height: 1.8;
   color: var(--ink-4);
+}
+
+/* ========================================
+   Drawer（只有 html.drawer-ready 生效）
+   ======================================== */
+
+/* 首頁變暗的遮罩，同時是「點抽屜以外的地方就關閉」的點擊目標。
+   它是 .home 的兄弟節點：抽屜開啟時 .home 會被設成 inert，放在裡面就點不到了 */
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  background: rgba(12, 14, 16, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--drawer-out) ease,
+    visibility 0s linear var(--drawer-out);
+}
+
+html.drawer-open .scrim {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity var(--drawer-out) ease,
+    visibility 0s;
+}
+
+/* 抽屜開啟時左欄的名字與頭像降到 55%，保留脈絡但不搶注意力 */
+html.drawer-open .intro__greeting,
+html.drawer-open .intro__name {
+  opacity: 0.55;
+}
+
+html.drawer-ready .intro__greeting,
+html.drawer-ready .intro__name {
+  transition: opacity var(--drawer-out) ease;
+}
+
+/*
+ * 退場的 visibility 延遲到過場結束才切換，JS 就不需要任何 setTimeout——
+ * 所有時間都留在 CSS 裡，快速連點也不會有卡住的中間狀態。
+ */
+html.drawer-ready .sections {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  width: min(var(--drawer-w), 100%);
+  border-left: 1px solid var(--rule-strong);
+  box-shadow: -30px 0 80px rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  visibility: hidden;
+  transform: var(--drawer-enter);
+  transition:
+    transform var(--drawer-out) var(--drawer-ease),
+    opacity var(--drawer-out) var(--drawer-ease),
+    visibility 0s linear var(--drawer-out);
+}
+
+html.drawer-open .sections {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition:
+    transform var(--drawer-in) var(--drawer-ease),
+    opacity var(--drawer-in) var(--drawer-ease),
+    visibility 0s;
+}
+
+html.drawer-ready .panel {
+  display: none;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border-top: 0;
+}
+
+html.drawer-ready .panel[data-open] {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+/* ---------- 抽屜頁首（固定，不隨內容捲動） ---------- */
+
+.panel__bar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: var(--header-h);
+  padding: 0 16px 0 48px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  font-size: 12px;
+  line-height: normal;
+  letter-spacing: 0.18em;
+  color: var(--ink-4);
+}
+
+.panel__id {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.panel__num {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--ink);
+  border-radius: 3px;
+  letter-spacing: 0;
+  color: var(--ink);
+}
+
+.panel__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.panel__steps {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 20px;
+}
+
+.panel__step,
+.panel__close {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* 觸控區至少 44px；視覺高度仍由頁首的 64px 決定 */
+.panel__step {
+  min-height: 44px;
+  white-space: nowrap;
+}
+
+.panel__step[disabled] {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.panel__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  font-size: 18px;
+  letter-spacing: 0;
+  color: var(--ink);
+}
+
+/* ---------- 內容區：只有這裡捲動 ---------- */
+
+html.drawer-ready .panel__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  /* 捲到底時不要把捲動傳給底下的首頁 */
+  overscroll-behavior: contain;
+  padding: 40px 48px;
+}
+
+html.drawer-ready .panel__body::-webkit-scrollbar {
+  width: 4px;
+}
+
+html.drawer-ready .panel__body::-webkit-scrollbar-thumb {
+  background: var(--rule);
+  border-radius: 2px;
+}
+
+/* 抽屜開啟時鎖住底下的捲動。--sbw 是 JS 量到的捲軸寬度，
+   補回來才不會因為捲軸消失而讓版面橫向跳一下 */
+html.drawer-open body {
+  overflow: hidden;
+  padding-right: var(--sbw, 0px);
 }
 
 /* ========================================
@@ -763,6 +988,34 @@ html:not(.js) .index__desc {
 }
 
 @media (max-width: 736px) {
+  :root {
+    /* 全螢幕面板從底部推上來 */
+    --drawer-enter: translateY(100%);
+  }
+
+  html.drawer-ready .sections {
+    top: auto;
+    left: 0;
+    right: 0;
+    width: auto;
+    /* dvh 而不是 vh：手機瀏覽器的工具列收合時高度才會跟著變 */
+    height: 100dvh;
+    border-left: 0;
+    border-top: 1px solid var(--rule-strong);
+  }
+
+  .panel__bar {
+    padding: 0 8px 0 20px;
+  }
+
+  .panel__steps {
+    gap: 8px;
+  }
+
+  html.drawer-ready .panel__body {
+    padding: 24px 20px;
+  }
+
   .masthead {
     padding: 0 20px;
   }
@@ -799,13 +1052,27 @@ html:not(.js) .index__desc {
    Motion / Print
    ======================================== */
 
+/*
+ * 規格要的是「只做淡入淡出，不位移」，不是把過場全部關掉，
+ * 所以這裡停的是位移本身與動畫，顏色的淡入淡出留著。
+ */
 @media (prefers-reduced-motion: reduce) {
+  :root {
+    --drawer-enter: none;
+    --drawer-in: 120ms;
+    --drawer-out: 120ms;
+  }
+
   *,
   *::before,
   *::after {
-    transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+
+  .index__link:hover .index__arrow {
+    transform: none;
   }
 }
 
@@ -832,12 +1099,36 @@ html:not(.js) .index__desc {
     --status: #333333;
   }
 
-  /* 純導覽的部分不印：背景、頁首列（含語系切換）、目錄、頁尾連結與快捷鍵提示 */
+  /* 純導覽的部分不印：背景、頁首列（含語系切換）、目錄、頁尾連結與快捷鍵提示，
+     以及抽屜自己的頁首與遮罩 */
   .backdrop,
   .masthead,
   .index,
-  .colophon {
+  .colophon,
+  .js-only {
     display: none;
+  }
+
+  /* 有 JS 時段落是收起來的抽屜；列印要把全部段落攤平成一般內容 */
+  html.drawer-ready .sections {
+    position: static;
+    display: block;
+    width: auto;
+    border-left: 0;
+    box-shadow: none;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  html.drawer-ready .panel,
+  html.drawer-ready .panel[data-open] {
+    display: block;
+  }
+
+  html.drawer-ready .panel__body {
+    overflow: visible;
+    padding: 0;
   }
 
   body {
