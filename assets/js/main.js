@@ -48,6 +48,24 @@ let openId = null;
 let lastTrigger = null;
 let rows = [];
 let locked = false;
+// enhance() 註冊過的監聽器，初始化失敗時要全部移除（見 resetToFallback）
+const bound = [];
+// 初始化失敗之後就停在 fallback，不讓殘留的事件處理器把畫面改回來
+let disabled = false;
+
+/**
+ * 所有監聽器都要經過這裡註冊。
+ *
+ * 初始化失敗時要讓頁面回到「main.js 根本沒載到」的狀態，而殘留的 handler 會
+ * 破壞那個狀態——最明顯的是語系連結：onLangClick 會 preventDefault()，
+ * 但 render() 已經因為 disabled 直接 return，於是連結既不換頁也不更新畫面。
+ * 逐一加 disabled 守衛也能修，但那要記得替每個新 handler 補；集中註冊、
+ * 集中移除，漏掉時是立刻看得出來，不是靜默失效。
+ */
+function on(target, type, fn, options) {
+  target.addEventListener(type, fn, options);
+  bound.push([target, type, fn, options]);
+}
 
 /* ========================================
    Model：開機時讀一次 DOM，之後都是純函式
@@ -144,6 +162,10 @@ function normalizeOnBoot() {
    ======================================== */
 
 function render() {
+  // enhance() 綁的監聽器在初始化失敗之後仍然在，pageshow 之類的事件會再呼叫
+  // 一次 render()，把剛還原好的 fallback 又改回「JS 可用」的樣子
+  if (disabled) return;
+
   applyLang(currentLang);
 
   const id = location.hash.slice(1);
@@ -308,6 +330,72 @@ function closePanel() {
 }
 
 /* ========================================
+   段落內分頁（目前只有 About 用）
+   ======================================== */
+
+/*
+ * 一般的 tabs 模式：方向鍵在分頁之間移動、roving tabindex 讓整列只有一個
+ * tab stop。方向鍵和「上一段 / 下一段」撞在一起，所以 onKeydown 以焦點位置
+ * 分流——焦點在分頁列裡就換分頁，否則換段落。
+ *
+ * 沒有 JS 時分頁列整列不顯示（.js-only），四組內容照原樣依序排開，
+ * 每組自己的 <h3> 就是標題，所以這裡不需要任何退路處理。
+ */
+
+function tabsOf(tablist) {
+  return [...tablist.querySelectorAll('[role="tab"]')];
+}
+
+function selectTab(tab) {
+  const tablist = tab.closest('[role="tablist"]');
+  if (!tablist) return;
+
+  for (const other of tabsOf(tablist)) {
+    const selected = other === tab;
+    other.setAttribute("aria-selected", String(selected));
+    // roving tabindex：整列只留一個 tab stop
+    other.tabIndex = selected ? 0 : -1;
+    const panel = document.getElementById(other.getAttribute("aria-controls"));
+    if (panel) panel.hidden = !selected;
+  }
+}
+
+function initTabs() {
+  for (const tablist of document.querySelectorAll('[role="tablist"]')) {
+    const tabs = tabsOf(tablist);
+    if (tabs.length === 0) continue;
+    selectTab(tabs[0]);
+
+    on(tablist, "click", (event) => {
+      const tab = event.target.closest('[role="tab"]');
+      if (tab) selectTab(tab);
+    });
+  }
+}
+
+/** 回傳 true 代表這個按鍵已經由分頁列處理掉 */
+function handleTabKey(event) {
+  const tab = event.target.closest('[role="tab"]');
+  if (!tab) return false;
+
+  const tabs = tabsOf(tab.closest('[role="tablist"]'));
+  const at = tabs.indexOf(tab);
+  let next = null;
+
+  if (event.key === "ArrowRight") next = tabs[(at + 1) % tabs.length];
+  else if (event.key === "ArrowLeft")
+    next = tabs[(at - 1 + tabs.length) % tabs.length];
+  else if (event.key === "Home") next = tabs[0];
+  else if (event.key === "End") next = tabs[tabs.length - 1];
+  else return false;
+
+  event.preventDefault();
+  selectTab(next);
+  next.focus();
+  return true;
+}
+
+/* ========================================
    Modality
    ======================================== */
 
@@ -454,7 +542,7 @@ function onIndexClick(event) {
 }
 
 function onKeydown(event) {
-  if (event.defaultPrevented) return;
+  if (disabled || event.defaultPrevented) return;
   // 先擋掉不該觸發的情境：輸入中、組字中（中文輸入法在組字時也會送 keydown）、
   // 按著修飾鍵（L 會撞到 Ctrl+L / Cmd+L 的網址列）
   if (isTyping(event.target) || event.isComposing || event.keyCode === 229) {
@@ -480,6 +568,9 @@ function onKeydown(event) {
     toggleLang();
     return;
   }
+
+  // 焦點在分頁列裡時，方向鍵屬於分頁；其餘情況才是「上一段 / 下一段」
+  if (handleTabKey(event)) return;
 
   if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
     // 抽屜關著時不攔截左右鍵，橫向捲動還是要能用
@@ -575,6 +666,14 @@ let touchX = null;
 let touchY = null;
 
 function onTouchStart(event) {
+  // 分頁列自己會橫向捲動（≤736px 的 overflow-x: auto），在上面滑不該換段落。
+  // touchend 的 target 仍然是起始元素，所以在這裡擋掉就夠了；
+  // 狀態要明確清空，否則會沿用上一次手勢的起點。
+  if (event.target.closest(".tabs")) {
+    touchX = null;
+    touchY = null;
+    return;
+  }
   if (openId === null || event.touches.length !== 1) return;
   touchX = event.touches[0].clientX;
   touchY = event.touches[0].clientY;
@@ -606,27 +705,29 @@ function enhance() {
     row.section.setAttribute("tabindex", "-1");
   }
 
+  initTabs();
+
   const index = document.querySelector(".index");
-  if (index) index.addEventListener("click", onIndexClick);
+  if (index) on(index, "click", onIndexClick);
 
   const langswitch = document.querySelector(".langswitch");
-  if (langswitch) langswitch.addEventListener("click", onLangClick);
+  if (langswitch) on(langswitch, "click", onLangClick);
 
   const sections = document.querySelector(".sections");
   if (sections) {
-    sections.addEventListener("click", onDrawerClick);
-    sections.addEventListener("touchstart", onTouchStart, { passive: true });
-    sections.addEventListener("touchend", onTouchEnd, { passive: true });
+    on(sections, "click", onDrawerClick);
+    on(sections, "touchstart", onTouchStart, { passive: true });
+    on(sections, "touchend", onTouchEnd, { passive: true });
   }
 
   const scrim = document.querySelector(".scrim");
-  if (scrim) scrim.addEventListener("click", onDrawerClick);
+  if (scrim) on(scrim, "click", onDrawerClick);
 
-  document.addEventListener("keydown", onKeydown);
-  window.addEventListener("hashchange", render);
-  window.addEventListener("popstate", onPopState);
+  on(document, "keydown", onKeydown);
+  on(window, "hashchange", render);
+  on(window, "popstate", onPopState);
   // 從 bfcache 回來時不會有 hashchange；render 可重複呼叫，補一次很便宜
-  window.addEventListener("pageshow", render);
+  on(window, "pageshow", render);
 }
 
 function init() {
@@ -645,13 +746,48 @@ function init() {
   root.classList.add("drawer-ready");
 }
 
-// 這支檔案沒載到、被擋下或丟例外時，拿掉 js 旗標退回「段落依序排列、兩個語系並陳」的版面，
-// 不要留下一個看起來有互動、實際上動不了的頁面
+/*
+ * 退回「沒有 JS」的版面。
+ *
+ * enhance() 與 initTabs() 已經改過 DOM，而那些改動都假設後面的程式還會跑：
+ *   - tabpanel 的 hidden：只留一組可見，另外三組讀不到——退路本身就壞了
+ *   - role="dialog" / aria-modal / tabindex：沒有 JS 的段落只是一般內容，
+ *     留著等於對輔助技術說謊
+ *   - aria-keyshortcuts：宣稱了不存在的快捷鍵
+ * 所以不是只清一項，是把 init 期間所有這類改動一次還原。
+ */
+function resetToFallback() {
+  disabled = true;
+
+  // 先拆監聽器再還原 DOM：留著的話，語系連結會被 onLangClick 的
+  // preventDefault() 擋住導覽，而 render() 又已經不做事，按了完全沒反應。
+  // 拆乾淨之後，這個狀態和「main.js 根本沒載到」完全一樣——而那個狀態
+  // 的行為（原生換頁 + inline script 套用語系）是驗證過正確的。
+  for (const [target, type, fn, options] of bound) {
+    target.removeEventListener(type, fn, options);
+  }
+  bound.length = 0;
+
+  root.classList.remove("js");
+  setSectionsInert(false);
+
+  for (const panel of document.querySelectorAll('[role="tabpanel"]')) {
+    panel.hidden = false;
+  }
+  for (const section of document.querySelectorAll(".panel")) {
+    section.removeAttribute("role");
+    section.removeAttribute("aria-modal");
+    section.removeAttribute("tabindex");
+  }
+  for (const link of document.querySelectorAll(".index__link")) {
+    link.removeAttribute("aria-keyshortcuts");
+  }
+}
+
+// 這支檔案被擋下或丟例外時退回 fallback 版面，
+// 不要留下一個看起來有互動、實際上動不了、而且有內容讀不到的頁面
 try {
   init();
 } catch (e) {
-  root.classList.remove("js");
-  // render() 可能已經把 .sections 設成 inert；退回 fallback 版面時要解開，
-  // 否則段落讀得到卻點不了裡面的連結
-  setSectionsInert(false);
+  resetToFallback();
 }

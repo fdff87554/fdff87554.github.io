@@ -829,6 +829,67 @@ html.drawer-ready .panel[data-open] {
   color: var(--ink);
 }
 
+/* ---------- 段落內分頁（目前只有 About 用） ---------- */
+
+/*
+ * 分頁列和抽屜頁首一樣固定不動，只有下面的內容區捲動，所以它是 .panel 的
+ * 直接子元素、不在 .panel__body 裡面。
+ */
+.tabs {
+  display: flex;
+  flex: none;
+  align-items: stretch;
+  gap: 24px;
+  height: 52px;
+  padding: 0 48px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.tabs__tab {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: var(--ink-5);
+  cursor: pointer;
+  transition: color 0.2s ease-out;
+}
+
+.tabs__tab[aria-selected="true"] {
+  color: var(--ink);
+  box-shadow: inset 0 -2px 0 var(--ink);
+}
+
+@media (hover: hover) {
+  .tabs__tab:hover {
+    color: var(--ink);
+  }
+}
+
+/* 分頁的內容區自己可以聚焦（tabindex="0"），焦點框不要貼著文字 */
+.group:focus-visible {
+  outline-offset: -2px;
+}
+
+/* 有分頁時，分頁列本身就是標題：大標與每一組的小標都不再顯示，
+   否則分頁寫著 EXPERIENCE、底下又立刻出現一次 EXPERIENCE。
+   沒有 JS 時分頁列不存在，這兩層標題就是唯一的標示，必須留著。 */
+html.drawer-ready .panel[data-tabs] .panel__title,
+html.drawer-ready .panel[data-tabs] .panel__group {
+  display: none;
+}
+
+/* 分頁列已經占掉一段高度，內容區的留白跟著收一點（設計稿 32px / 48px） */
+html.drawer-ready .panel[data-tabs] .panel__body {
+  padding: 32px 48px;
+}
+
 /* ---------- 內容區：只有這裡捲動 ---------- */
 
 html.drawer-ready .panel__body {
@@ -1012,6 +1073,25 @@ html:not(.js) .index__desc {
     gap: 8px;
   }
 
+  .tabs {
+    gap: 16px;
+    padding: 0 20px;
+    /* 四個分頁在 390 寬擠不下，改成可橫向捲動而不是換行把高度撐開 */
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tabs__tab {
+    flex: none;
+  }
+
+  /* 兩個 selector 都列出來：.panel[data-tabs] .panel__body 的 specificity 比
+     單純的 .panel__body 高，只寫後者的話 About 會卡在桌面的 32px 48px */
+  html.drawer-ready .panel[data-tabs] .panel__body,
   html.drawer-ready .panel__body {
     padding: 24px 20px;
   }
@@ -1126,9 +1206,21 @@ html:not(.js) .index__desc {
     display: block;
   }
 
+  /* 同上：About 的 padding 要跟著回到 0，不能被 [data-tabs] 那條鎖住 */
+  html.drawer-ready .panel[data-tabs] .panel__body,
   html.drawer-ready .panel__body {
     overflow: visible;
     padding: 0;
+  }
+
+  /* 分頁是螢幕上的收納方式；紙上要把四組都印出來，兩層標題也要留著 */
+  html.drawer-ready .panel[data-tabs] .panel__title,
+  html.drawer-ready .panel[data-tabs] .panel__group {
+    display: block;
+  }
+
+  .group[hidden] {
+    display: block;
   }
 
   body {

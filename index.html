@@ -233,7 +233,7 @@
     <div class="scrim js-only" data-close></div>
 
     <main class="sections">
-      <section class="panel" id="about" aria-labelledby="about-title">
+      <section class="panel" id="about" aria-labelledby="about-title" data-tabs>
         <!-- Drawer chrome. Filled by main.js; hidden without JS -->
         <header class="panel__bar js-only">
           <p class="panel__id">
@@ -250,6 +250,48 @@
             <button type="button" class="panel__close" data-close>✕</button>
           </p>
         </header>
+        <div class="tabs js-only" role="tablist" aria-labelledby="about-title">
+          <button
+            type="button"
+            class="tabs__tab"
+            role="tab"
+            id="tab-experience"
+            aria-controls="group-experience"
+          >
+            <span class="lang" lang="en">Experience</span
+            ><span class="lang" lang="zh-TW">工作經歷</span>
+          </button>
+          <button
+            type="button"
+            class="tabs__tab"
+            role="tab"
+            id="tab-activities"
+            aria-controls="group-activities"
+          >
+            <span class="lang" lang="en">Activities</span
+            ><span class="lang" lang="zh-TW">社群活動</span>
+          </button>
+          <button
+            type="button"
+            class="tabs__tab"
+            role="tab"
+            id="tab-education"
+            aria-controls="group-education"
+          >
+            <span class="lang" lang="en">Education</span
+            ><span class="lang" lang="zh-TW">學歷</span>
+          </button>
+          <button
+            type="button"
+            class="tabs__tab"
+            role="tab"
+            id="tab-skills"
+            aria-controls="group-skills"
+          >
+            <span class="lang" lang="en">Skills</span
+            ><span class="lang" lang="zh-TW">技術能力</span>
+          </button>
+        </div>
         <div class="panel__body">
           <h2 class="panel__title" id="about-title">
             <span class="lang" lang="en">About</span
@@ -259,216 +301,252 @@
           <span id="intro_en" class="anchor"></span>
           <span id="intro_zhtw" class="anchor"></span>
 
-          <h3 class="panel__group">
-            <span class="lang" lang="en">Experience</span
-            ><span class="lang" lang="zh-TW">工作經歷</span>
-          </h3>
-          <ol class="timeline" role="list" data-group="experience">
-            <li class="timeline__item timeline__item--current">
-              <p class="entry__date">
-                <span class="lang" lang="en">Apr. 2025 - Present</span
-                ><span class="lang" lang="zh-TW">2025年4月 - 現在</span>
-              </p>
-              <p class="entry__title">
-                <span class="lang" lang="en"
-                  >Threat Research Team Software Engineer</span
-                ><span class="lang" lang="zh-TW">威脅研究團隊軟體工程師</span>
-              </p>
-              <p class="entry__org">
-                <span class="lang" lang="en">TXOne Networks Inc.</span
-                ><span class="lang" lang="zh-TW"
-                  >睿控網安 (TXOne Networks)</span
-                >
-              </p>
-            </li>
-            <li class="timeline__item">
-              <p class="entry__date">
-                <span class="lang" lang="en">Apr. 2023 - Sept. 2024</span
-                ><span class="lang" lang="zh-TW">2023年4月 - 2024年9月</span>
-              </p>
-              <p class="entry__title">
-                <span class="lang" lang="en"
-                  >Threat Signature Research Team Intern</span
-                ><span class="lang" lang="zh-TW">威脅情資研究實習生</span>
-              </p>
-              <p class="entry__org">
-                <span class="lang" lang="en">TXOne Networks Inc.</span
-                ><span class="lang" lang="zh-TW"
-                  >睿控網安 (TXOne Networks)</span
-                >
-              </p>
-            </li>
-            <li class="timeline__item">
-              <p class="entry__date">
-                <span class="lang" lang="en">Mar. 2022 - Jul. 2022</span
-                ><span class="lang" lang="zh-TW">2022年3月 - 2022年7月</span>
-              </p>
-              <p class="entry__title">
-                <span class="lang" lang="en"
-                  >AI Development Assistant Engineer (Intern)</span
-                ><span class="lang" lang="zh-TW">AI開發助理工程師（實習）</span>
-              </p>
-              <p class="entry__org">
-                <span class="lang" lang="en"
-                  >Wiwynn - AI &amp; Data Development Department</span
-                ><span class="lang" lang="zh-TW"
-                  >緯穎科技服務 - AI與數據智慧開發部</span
-                >
-              </p>
-            </li>
-            <li class="timeline__item">
-              <p class="entry__date">
-                <span class="lang" lang="en">Jun. 2021 - Feb. 2022</span
-                ><span class="lang" lang="zh-TW">2021年6月 - 2022年2月</span>
-              </p>
-              <p class="entry__title">
-                <span class="lang" lang="en"
-                  >Deep Learning Teaching Assistant</span
-                ><span class="lang" lang="zh-TW">深度學習課程助教</span>
-              </p>
-              <p class="entry__org">
-                <span class="lang" lang="en"
-                  >Fu Jen Catholic University - Department of Computer
-                  Science</span
-                ><span class="lang" lang="zh-TW">輔仁大學資訊工程學系</span>
-              </p>
-            </li>
-            <li class="timeline__item">
-              <p class="entry__date">
-                <span class="lang" lang="en">Jul. 2020 - Aug. 2020</span
-                ><span class="lang" lang="zh-TW">2020年7月 - 2020年8月</span>
-              </p>
-              <p class="entry__title">
-                <span class="lang" lang="en"
-                  >Smart Manufacturing Transformation Intern</span
-                ><span class="lang" lang="zh-TW">智慧製造轉型實習生</span>
-              </p>
-              <p class="entry__org">
-                <span class="lang" lang="en"
-                  >AUO Corporation - A+ Summer Internship Program</span
-                ><span class="lang" lang="zh-TW"
-                  >友達光電 - A+ 暑期實習計畫</span
-                >
-              </p>
-            </li>
-          </ol>
+          <div
+            class="group"
+            id="group-experience"
+            role="tabpanel"
+            aria-labelledby="tab-experience"
+            tabindex="0"
+          >
+            <h3 class="panel__group">
+              <span class="lang" lang="en">Experience</span
+              ><span class="lang" lang="zh-TW">工作經歷</span>
+            </h3>
+            <ol class="timeline" role="list" data-group="experience">
+              <li class="timeline__item timeline__item--current">
+                <p class="entry__date">
+                  <span class="lang" lang="en">Apr. 2025 - Present</span
+                  ><span class="lang" lang="zh-TW">2025年4月 - 現在</span>
+                </p>
+                <p class="entry__title">
+                  <span class="lang" lang="en"
+                    >Threat Research Team Software Engineer</span
+                  ><span class="lang" lang="zh-TW">威脅研究團隊軟體工程師</span>
+                </p>
+                <p class="entry__org">
+                  <span class="lang" lang="en">TXOne Networks Inc.</span
+                  ><span class="lang" lang="zh-TW"
+                    >睿控網安 (TXOne Networks)</span
+                  >
+                </p>
+              </li>
+              <li class="timeline__item">
+                <p class="entry__date">
+                  <span class="lang" lang="en">Apr. 2023 - Sept. 2024</span
+                  ><span class="lang" lang="zh-TW">2023年4月 - 2024年9月</span>
+                </p>
+                <p class="entry__title">
+                  <span class="lang" lang="en"
+                    >Threat Signature Research Team Intern</span
+                  ><span class="lang" lang="zh-TW">威脅情資研究實習生</span>
+                </p>
+                <p class="entry__org">
+                  <span class="lang" lang="en">TXOne Networks Inc.</span
+                  ><span class="lang" lang="zh-TW"
+                    >睿控網安 (TXOne Networks)</span
+                  >
+                </p>
+              </li>
+              <li class="timeline__item">
+                <p class="entry__date">
+                  <span class="lang" lang="en">Mar. 2022 - Jul. 2022</span
+                  ><span class="lang" lang="zh-TW">2022年3月 - 2022年7月</span>
+                </p>
+                <p class="entry__title">
+                  <span class="lang" lang="en"
+                    >AI Development Assistant Engineer (Intern)</span
+                  ><span class="lang" lang="zh-TW"
+                    >AI開發助理工程師（實習）</span
+                  >
+                </p>
+                <p class="entry__org">
+                  <span class="lang" lang="en"
+                    >Wiwynn - AI &amp; Data Development Department</span
+                  ><span class="lang" lang="zh-TW"
+                    >緯穎科技服務 - AI與數據智慧開發部</span
+                  >
+                </p>
+              </li>
+              <li class="timeline__item">
+                <p class="entry__date">
+                  <span class="lang" lang="en">Jun. 2021 - Feb. 2022</span
+                  ><span class="lang" lang="zh-TW">2021年6月 - 2022年2月</span>
+                </p>
+                <p class="entry__title">
+                  <span class="lang" lang="en"
+                    >Deep Learning Teaching Assistant</span
+                  ><span class="lang" lang="zh-TW">深度學習課程助教</span>
+                </p>
+                <p class="entry__org">
+                  <span class="lang" lang="en"
+                    >Fu Jen Catholic University - Department of Computer
+                    Science</span
+                  ><span class="lang" lang="zh-TW">輔仁大學資訊工程學系</span>
+                </p>
+              </li>
+              <li class="timeline__item">
+                <p class="entry__date">
+                  <span class="lang" lang="en">Jul. 2020 - Aug. 2020</span
+                  ><span class="lang" lang="zh-TW">2020年7月 - 2020年8月</span>
+                </p>
+                <p class="entry__title">
+                  <span class="lang" lang="en"
+                    >Smart Manufacturing Transformation Intern</span
+                  ><span class="lang" lang="zh-TW">智慧製造轉型實習生</span>
+                </p>
+                <p class="entry__org">
+                  <span class="lang" lang="en"
+                    >AUO Corporation - A+ Summer Internship Program</span
+                  ><span class="lang" lang="zh-TW"
+                    >友達光電 - A+ 暑期實習計畫</span
+                  >
+                </p>
+              </li>
+            </ol>
+          </div>
 
-          <h3 class="panel__group">
-            <span class="lang" lang="en">Activities</span
-            ><span class="lang" lang="zh-TW">社群活動</span>
-          </h3>
-          <ol class="entries" role="list" data-group="activities">
-            <li class="entry">
-              <p class="entry__date">2022 - 2024</p>
-              <p class="entry__title">
-                <span class="lang" lang="en"
-                  >AIS3 Junior (Advanced Information Security Summer
-                  School)</span
-                ><span class="lang" lang="zh-TW"
-                  >教育部資安人才培育計畫（AIS3 Junior）</span
-                >
-              </p>
-              <p class="entry__org">
-                <span class="lang" lang="en">Speaker / Teaching Assistant</span
-                ><span class="lang" lang="zh-TW">講師 / 助教</span>
-              </p>
-            </li>
-            <li class="entry">
-              <p class="entry__date">
-                <span class="lang" lang="en">2022 - Present</span
-                ><span class="lang" lang="zh-TW">2022 - 至今</span>
-              </p>
-              <p class="entry__title">
-                <span class="lang" lang="en">OPass Android</span
-                ><span class="lang" lang="zh-TW">OPass Android 開源專案</span>
-              </p>
-              <p class="entry__org">
-                <span class="lang" lang="en">Co-maintainer</span
-                ><span class="lang" lang="zh-TW">共同維護者</span>
-              </p>
-            </li>
-            <li class="entry">
-              <p class="entry__date">2019 - 2020</p>
-              <p class="entry__title">
-                <span class="lang" lang="en"
-                  >NISRA (Networks and Information Security Research
-                  Association)</span
-                ><span class="lang" lang="zh-TW"
-                  >輔大資訊安全研究會（NISRA）</span
-                >
-              </p>
-              <p class="entry__org">
-                <span class="lang" lang="en">Vice President</span
-                ><span class="lang" lang="zh-TW">副會長</span>
-              </p>
-            </li>
-          </ol>
+          <div
+            class="group"
+            id="group-activities"
+            role="tabpanel"
+            aria-labelledby="tab-activities"
+            tabindex="0"
+          >
+            <h3 class="panel__group">
+              <span class="lang" lang="en">Activities</span
+              ><span class="lang" lang="zh-TW">社群活動</span>
+            </h3>
+            <ol class="entries" role="list" data-group="activities">
+              <li class="entry">
+                <p class="entry__date">2022 - 2024</p>
+                <p class="entry__title">
+                  <span class="lang" lang="en"
+                    >AIS3 Junior (Advanced Information Security Summer
+                    School)</span
+                  ><span class="lang" lang="zh-TW"
+                    >教育部資安人才培育計畫（AIS3 Junior）</span
+                  >
+                </p>
+                <p class="entry__org">
+                  <span class="lang" lang="en"
+                    >Speaker / Teaching Assistant</span
+                  ><span class="lang" lang="zh-TW">講師 / 助教</span>
+                </p>
+              </li>
+              <li class="entry">
+                <p class="entry__date">
+                  <span class="lang" lang="en">2022 - Present</span
+                  ><span class="lang" lang="zh-TW">2022 - 至今</span>
+                </p>
+                <p class="entry__title">
+                  <span class="lang" lang="en">OPass Android</span
+                  ><span class="lang" lang="zh-TW">OPass Android 開源專案</span>
+                </p>
+                <p class="entry__org">
+                  <span class="lang" lang="en">Co-maintainer</span
+                  ><span class="lang" lang="zh-TW">共同維護者</span>
+                </p>
+              </li>
+              <li class="entry">
+                <p class="entry__date">2019 - 2020</p>
+                <p class="entry__title">
+                  <span class="lang" lang="en"
+                    >NISRA (Networks and Information Security Research
+                    Association)</span
+                  ><span class="lang" lang="zh-TW"
+                    >輔大資訊安全研究會（NISRA）</span
+                  >
+                </p>
+                <p class="entry__org">
+                  <span class="lang" lang="en">Vice President</span
+                  ><span class="lang" lang="zh-TW">副會長</span>
+                </p>
+              </li>
+            </ol>
+          </div>
 
-          <h3 class="panel__group">
-            <span class="lang" lang="en">Education</span
-            ><span class="lang" lang="zh-TW">學歷</span>
-          </h3>
-          <ol class="entries" role="list" data-group="education">
-            <li class="entry">
-              <p class="entry__date">
-                <span class="lang" lang="en">Sept. 2022 - Jun. 2024</span
-                ><span class="lang" lang="zh-TW">2022年9月 - 2024年6月</span>
-              </p>
-              <p class="entry__title">
-                <span class="lang" lang="en"
-                  >Master's Degree in Institute of Information Security</span
-                ><span class="lang" lang="zh-TW">資訊安全研究所 碩士</span>
-              </p>
-              <p class="entry__org">
-                <span class="lang" lang="en">National Tsing Hua University</span
-                ><span class="lang" lang="zh-TW">國立清華大學</span>
-              </p>
-            </li>
-            <li class="entry">
-              <p class="entry__date">
-                <span class="lang" lang="en">Sept. 2018 - Jun. 2022</span
-                ><span class="lang" lang="zh-TW">2018年9月 - 2022年6月</span>
-              </p>
-              <p class="entry__title">
-                <span class="lang" lang="en"
-                  >Bachelor's Degree in Computer Science and Information
-                  Engineering</span
-                ><span class="lang" lang="zh-TW">資訊工程學系 學士</span>
-              </p>
-              <p class="entry__org">
-                <span class="lang" lang="en">Fu Jen Catholic University</span
-                ><span class="lang" lang="zh-TW">天主教輔仁大學</span>
-              </p>
-            </li>
-          </ol>
+          <div
+            class="group"
+            id="group-education"
+            role="tabpanel"
+            aria-labelledby="tab-education"
+            tabindex="0"
+          >
+            <h3 class="panel__group">
+              <span class="lang" lang="en">Education</span
+              ><span class="lang" lang="zh-TW">學歷</span>
+            </h3>
+            <ol class="entries" role="list" data-group="education">
+              <li class="entry">
+                <p class="entry__date">
+                  <span class="lang" lang="en">Sept. 2022 - Jun. 2024</span
+                  ><span class="lang" lang="zh-TW">2022年9月 - 2024年6月</span>
+                </p>
+                <p class="entry__title">
+                  <span class="lang" lang="en"
+                    >Master's Degree in Institute of Information Security</span
+                  ><span class="lang" lang="zh-TW">資訊安全研究所 碩士</span>
+                </p>
+                <p class="entry__org">
+                  <span class="lang" lang="en"
+                    >National Tsing Hua University</span
+                  ><span class="lang" lang="zh-TW">國立清華大學</span>
+                </p>
+              </li>
+              <li class="entry">
+                <p class="entry__date">
+                  <span class="lang" lang="en">Sept. 2018 - Jun. 2022</span
+                  ><span class="lang" lang="zh-TW">2018年9月 - 2022年6月</span>
+                </p>
+                <p class="entry__title">
+                  <span class="lang" lang="en"
+                    >Bachelor's Degree in Computer Science and Information
+                    Engineering</span
+                  ><span class="lang" lang="zh-TW">資訊工程學系 學士</span>
+                </p>
+                <p class="entry__org">
+                  <span class="lang" lang="en">Fu Jen Catholic University</span
+                  ><span class="lang" lang="zh-TW">天主教輔仁大學</span>
+                </p>
+              </li>
+            </ol>
+          </div>
 
-          <h3 class="panel__group">
-            <span class="lang" lang="en">Technical Skills</span
-            ><span class="lang" lang="zh-TW">技術能力</span>
-          </h3>
-          <div class="skills" data-group="skills">
-            <div class="skills__group">
-              <p class="skills__name">
-                <span class="lang" lang="en">Deep Learning</span
-                ><span class="lang" lang="zh-TW">深度學習</span>
-              </p>
-              <ul class="skills__list" role="list">
-                <li>TensorFlow</li>
-                <li>PyTorch</li>
-              </ul>
-            </div>
-            <div class="skills__group">
-              <p class="skills__name">
-                <span class="lang" lang="en"
-                  >Development &amp; Project Management</span
-                ><span class="lang" lang="zh-TW">開發與專案管理</span>
-              </p>
-              <ul class="skills__list" role="list">
-                <li>NextJS</li>
-                <li>ReactJS</li>
-                <li>Docker</li>
-                <li>Kubernetes</li>
-              </ul>
+          <div
+            class="group"
+            id="group-skills"
+            role="tabpanel"
+            aria-labelledby="tab-skills"
+            tabindex="0"
+          >
+            <h3 class="panel__group">
+              <span class="lang" lang="en">Technical Skills</span
+              ><span class="lang" lang="zh-TW">技術能力</span>
+            </h3>
+            <div class="skills" data-group="skills">
+              <div class="skills__group">
+                <p class="skills__name">
+                  <span class="lang" lang="en">Deep Learning</span
+                  ><span class="lang" lang="zh-TW">深度學習</span>
+                </p>
+                <ul class="skills__list" role="list">
+                  <li>TensorFlow</li>
+                  <li>PyTorch</li>
+                </ul>
+              </div>
+              <div class="skills__group">
+                <p class="skills__name">
+                  <span class="lang" lang="en"
+                    >Development &amp; Project Management</span
+                  ><span class="lang" lang="zh-TW">開發與專案管理</span>
+                </p>
+                <ul class="skills__list" role="list">
+                  <li>NextJS</li>
+                  <li>ReactJS</li>
+                  <li>Docker</li>
+                  <li>Kubernetes</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
