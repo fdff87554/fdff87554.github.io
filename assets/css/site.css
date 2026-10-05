@@ -595,6 +595,122 @@ html:not(.drawer-ready) .js-only {
   color: var(--ink-4);
 }
 
+/*
+ * 看不到但讀得到。給 GitHub 卡片的日期與星數補上標籤——它們在無障礙樹裡是裸值
+ * （CDP 實測讀成「… Python 7」，那個 7 無從判斷是什麼）。
+ *
+ * 刻意不設 display：語系切換靠 .lang 的 display: none，設了就蓋不過去。
+ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- GitHub ---------- */
+
+/*
+ * 卡片由 scripts/fetch-github.sh 在 CI 寫進 index.html，不在瀏覽器抓。
+ * 顏色與框線一律走 token，列印時那一段會重新定義 token，這裡就會跟著變深，
+ * 不必在這裡再寫一組列印覆寫。
+ */
+
+.panel__lede {
+  margin-bottom: 24px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-4);
+}
+
+.repos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+/*
+ * grid 的項目是 <li>，被拉伸到同列高度的也是 <li>；卡片是它裡面的連結，預設只有內容高。
+ * 不讓連結填滿的話，同列卡片的下框線會差開（實測 12px 與 21px），
+ * .repo__meta 的 margin-top: auto 也跟著失效——語言與星數那一行不會對齊。
+ */
+.repos > li {
+  display: flex;
+}
+
+.repo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 120px;
+  padding: 16px 18px;
+  border: 1px solid var(--rule-soft);
+  border-radius: 4px;
+  transition: border-color 200ms ease-out;
+}
+
+.repo__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/*
+ * 設計稿寫的是「溢出省略」，但 680px 抽屜切成兩欄之後，名稱欄只剩約 250px，
+ * computer-security-2022 這種長度會被截成 computer-securi…——repo 名稱正是這張卡
+ * 唯一的識別，截掉就沒有意義了。改成換行，卡片高度由同列最高的那張決定，版面不受影響。
+ */
+.repo__name {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.repo__date {
+  flex: none;
+  font-size: 12px;
+  line-height: normal;
+  color: var(--ink-5);
+}
+
+.repo__desc {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-4);
+}
+
+/* 描述在上、語言與星數貼著卡片底，各卡的那一行才會對齊 */
+.repo__meta {
+  display: flex;
+  gap: 16px;
+  margin-top: auto;
+  padding-top: 4px;
+  font-size: 12px;
+  line-height: normal;
+  color: var(--ink-5);
+}
+
+@media (hover: hover) {
+  .repo:hover {
+    border-color: var(--rule-strong);
+  }
+}
+
+/* 抽屜在這個寬度以下是整頁寬，但兩欄卡片會窄到描述只剩兩三個字 */
+@media (max-width: 736px) {
+  .repos {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 /* ---------- Now ---------- */
 
 /*
